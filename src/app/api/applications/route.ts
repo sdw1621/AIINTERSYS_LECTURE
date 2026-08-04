@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { courseById } from "@/lib/courses";
 import { createApplication, readAll } from "@/lib/store";
+import { sendApplicationEmails } from "@/lib/email";
 import { validateApplication } from "@/lib/validate";
 
 export const runtime = "nodejs";
@@ -30,6 +31,13 @@ export async function POST(req: NextRequest) {
 
   const course = courseById(result.value.courseId)!;
   const app = await createApplication(result.value, course.title);
+
+  // 접수 확인 이메일 자동발송 — 실패해도 접수 자체는 성공 처리.
+  try {
+    await sendApplicationEmails(app);
+  } catch (err) {
+    console.error("[applications] 이메일 발송 중 오류:", err);
+  }
 
   return NextResponse.json(
     { ok: true, id: app.id, courseTitle: app.courseTitle },
