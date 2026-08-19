@@ -27,7 +27,7 @@ export const COURSE = {
  * ------------------------------------------------------------------ */
 
 export const EVENT = {
-  url: "https://event-us.kr/aiintersyslec/event/133127",
+  url: "https://event-us.kr/aiintersyslec/event/133124",
   /** 예: "2026년 9월 3일 (목) 19:00" */
   date: "",
   /** 예: "온라인 (Zoom)" 또는 "서울 강남구 …" */

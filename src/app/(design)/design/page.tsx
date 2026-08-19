@@ -1,5 +1,4 @@
 import Link from "next/link";
-import QRCode from "qrcode";
 import {
   AUDIENCE,
   COURSE,
@@ -28,14 +27,7 @@ function ApplyButton({ className = "dc-btn" }: { className?: string }) {
   );
 }
 
-export default async function DesignLandingPage() {
-  // 행사 URL에서 QR 을 직접 생성하므로, EVENT.url 을 바꾸면 QR 도 함께 바뀝니다.
-  const qrSvg = await QRCode.toString(EVENT.url, {
-    type: "svg",
-    margin: 0,
-    errorCorrectionLevel: "M",
-    color: { dark: "#1f1e1d", light: "#ffffff" },
-  });
+export default function DesignLandingPage() {
 
   return (
     <main>
@@ -298,18 +290,8 @@ export default async function DesignLandingPage() {
               <p className="dc-event-url">{EVENT.url}</p>
             </div>
             <div className="dc-event-action">
-              <a
-                href={EVENT.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="dc-qr"
-                aria-label="이벤터스 행사 페이지 QR 코드"
-                dangerouslySetInnerHTML={{ __html: qrSvg }}
-              />
-              <span className="dc-event-hint">
-                QR을 스캔하면 행사 페이지로 이동합니다
-              </span>
               <ApplyButton />
+              <span className="dc-event-hint">새 창으로 열립니다</span>
             </div>
           </div>
         </div>

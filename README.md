@@ -27,8 +27,7 @@
 
 - 히어로·개요·교육 대상·목표·5부 커리큘럼·실습 프로젝트·교육 방식·기대 효과·
   90분 시간표·FAQ·신청 안내
-- **신청 안내** (`#apply`): 행사 정보 카드 + **QR 코드** + 이벤터스 바로가기.
-  QR 은 `EVENT.url` 값으로 서버에서 생성되므로 링크를 바꾸면 QR 도 함께 바뀝니다
+- **신청 안내** (`#apply`): 행사 정보 카드 + 이벤터스 바로가기
 - 사이트의 모든 "신청하기" 버튼(헤더·히어로·신청 안내·하단 CTA)이 행사 페이지로 연결
 - **전용 브랜드**: 크림 `#F5F2EC` · 코랄 `#D97757` · 잉크 `#1F1E1D`
 
@@ -37,7 +36,7 @@
 
 ```ts
 export const EVENT = {
-  url: "https://event-us.kr/aiintersyslec/event/133127",
+  url: "https://event-us.kr/aiintersyslec/event/133124",
   date: "",      // 예: "2026년 9월 3일 (목) 19:00"
   place: "",     // 예: "온라인 (Zoom)"
   fee: "",       // 예: "무료"
@@ -52,7 +51,6 @@ export const EVENT = {
 - Next.js 16 (App Router, 라우트 그룹 기반 다중 루트 레이아웃) · React 19 · TypeScript
 - 저장 백엔드: Postgres (`DATABASE_URL`) 또는 JSON 파일 폴백
 - 메일: Resend (`RESEND_API_KEY`), 미설정 시 발송 생략
-- QR 생성: `qrcode` (서버에서 SVG 생성, 외부 요청 없음)
 
 ## 실행 방법
 
