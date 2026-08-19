@@ -11,10 +11,42 @@ export const COURSE = {
     "AI와 대화하며 브랜드 디자인을 기획하고, 하나의 디자인 시스템을 포스터·카드뉴스·상세페이지로 확장하는 방법을 배웁니다.",
   duration: "90분 (세팅·휴식 20분 별도)",
   method: "이론 + 시연 + 단계별 실습",
-  capacity: "선착순 30명",
+  capacity: "선착순 10명",
   prerequisite: "사전 지식 불필요 · 입문자 환영",
   host: "AI인터시스 (AIintersys)",
 } as const;
+
+/* ------------------------------------------------------------------ *
+ * 행사 신청 정보.
+ * 신청 접수는 이벤터스(event-us) 행사 페이지에서 처리합니다.
+ * 사이트의 모든 "신청하기" 버튼이 아래 url 로 연결됩니다.
+ *
+ * date / place / fee / deadline 은 행사 페이지 내용에 맞춰 채우면
+ * 히어로·신청 안내 영역에 자동으로 표시됩니다.
+ * 빈 문자열로 두면 해당 항목은 화면에 나타나지 않습니다.
+ * ------------------------------------------------------------------ */
+
+export const EVENT = {
+  url: "https://event-us.kr/aiintersyslec/event/133127",
+  /** 예: "2026년 9월 3일 (목) 19:00" */
+  date: "",
+  /** 예: "온라인 (Zoom)" 또는 "서울 강남구 …" */
+  place: "",
+  /** 예: "무료" 또는 "30,000원" */
+  fee: "",
+  /** 예: "2026년 9월 1일 (화) 18:00" */
+  deadline: "",
+} as const;
+
+/** 값이 채워진 행사 정보만 골라 [라벨, 값] 목록으로 돌려줍니다. */
+export function eventDetails(): { k: string; v: string }[] {
+  return [
+    { k: "일시", v: EVENT.date },
+    { k: "장소", v: EVENT.place },
+    { k: "참가비", v: EVENT.fee },
+    { k: "신청 마감", v: EVENT.deadline },
+  ].filter((d) => d.v.length > 0);
+}
 
 export const FACTS = [
   { k: "교육 시간", v: COURSE.duration },

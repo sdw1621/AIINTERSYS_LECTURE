@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { COURSE } from "@/lib/design-course";
+import { COURSE, EVENT } from "@/lib/design-course";
 import "./design.css";
 
 /* Claude Design 특강 전용 루트 레이아웃.
@@ -45,9 +45,17 @@ export default function DesignSiteLayout({
               <Link href="/design#faq" className="hide-sm">
                 FAQ
               </Link>
-              <Link href="/design/apply" className="dc-btn-sm">
-                신청하기
+              <Link href="/design#apply" className="hide-sm">
+                신청 안내
               </Link>
+              <a
+                href={EVENT.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dc-btn-sm"
+              >
+                신청하기
+              </a>
             </nav>
           </div>
         </header>
@@ -60,7 +68,9 @@ export default function DesignSiteLayout({
               © {new Date().getFullYear()} {COURSE.host} · {COURSE.title}
             </span>
             <span>
-              <Link href="/design/apply">수강 신청</Link>
+              <a href={EVENT.url} target="_blank" rel="noopener noreferrer">
+                이벤터스에서 신청
+              </a>
               {" · "}
               <Link href="/">AI인터시스 전체 교육과정</Link>
             </span>

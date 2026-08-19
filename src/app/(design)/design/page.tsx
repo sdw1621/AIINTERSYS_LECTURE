@@ -1,7 +1,9 @@
 import Link from "next/link";
+import QRCode from "qrcode";
 import {
   AUDIENCE,
   COURSE,
+  EVENT,
   FACTS,
   FAQ,
   FLOW,
@@ -9,15 +11,38 @@ import {
   OUTPUTS,
   PARTS,
   TIMELINE,
+  eventDetails,
 } from "@/lib/design-course";
 
-export default function DesignLandingPage() {
+/** 신청은 이벤터스 행사 페이지에서 접수합니다. */
+function ApplyButton({ className = "dc-btn" }: { className?: string }) {
+  return (
+    <a
+      href={EVENT.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      이벤터스에서 신청하기
+    </a>
+  );
+}
+
+export default async function DesignLandingPage() {
+  // 행사 URL에서 QR 을 직접 생성하므로, EVENT.url 을 바꾸면 QR 도 함께 바뀝니다.
+  const qrSvg = await QRCode.toString(EVENT.url, {
+    type: "svg",
+    margin: 0,
+    errorCorrectionLevel: "M",
+    color: { dark: "#1f1e1d", light: "#ffffff" },
+  });
+
   return (
     <main>
       {/* 히어로 */}
       <section className="dc-hero">
         <div className="dc-wrap">
-          <span className="dc-eyebrow">90분 실습 특강 · 선착순 30명</span>
+          <span className="dc-eyebrow">90분 실습 특강 · {COURSE.capacity}</span>
           <h1>
             브랜드 하나를,
             <br />
@@ -29,9 +54,7 @@ export default function DesignLandingPage() {
             많지 않아도 따라올 수 있도록 실습 중심으로 진행합니다.
           </p>
           <div className="actions">
-            <Link href="/design/apply" className="dc-btn">
-              수강 신청하기
-            </Link>
+            <ApplyButton />
             <Link href="#curriculum" className="dc-btn ghost">
               커리큘럼 보기
             </Link>
@@ -238,6 +261,60 @@ export default function DesignLandingPage() {
         </div>
       </section>
 
+      {/* 행사 안내 · 신청 */}
+      <section className="dc-section" id="apply">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Registration</p>
+          <h2>신청 안내</h2>
+          <p className="desc">
+            신청 접수와 결제, 일정 안내는 모두 이벤터스 행사 페이지에서
+            진행됩니다. 아래 버튼을 눌러 행사 페이지에서 신청해 주세요.
+          </p>
+
+          <div className="dc-event">
+            <div className="dc-event-body">
+              <span className="dc-event-badge">이벤터스 행사 페이지</span>
+              <h3>{COURSE.title}</h3>
+              <dl className="dc-event-meta">
+                {eventDetails().map((d) => (
+                  <div className="row" key={d.k}>
+                    <dt>{d.k}</dt>
+                    <dd>{d.v}</dd>
+                  </div>
+                ))}
+                <div className="row">
+                  <dt>교육 시간</dt>
+                  <dd>{COURSE.duration}</dd>
+                </div>
+                <div className="row">
+                  <dt>정원</dt>
+                  <dd>{COURSE.capacity}</dd>
+                </div>
+                <div className="row">
+                  <dt>준비물</dt>
+                  <dd>인터넷이 연결된 노트북 1대</dd>
+                </div>
+              </dl>
+              <p className="dc-event-url">{EVENT.url}</p>
+            </div>
+            <div className="dc-event-action">
+              <a
+                href={EVENT.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dc-qr"
+                aria-label="이벤터스 행사 페이지 QR 코드"
+                dangerouslySetInnerHTML={{ __html: qrSvg }}
+              />
+              <span className="dc-event-hint">
+                QR을 스캔하면 행사 페이지로 이동합니다
+              </span>
+              <ApplyButton />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 하단 CTA */}
       <section className="dc-cta">
         <div className="dc-wrap">
@@ -246,9 +323,10 @@ export default function DesignLandingPage() {
             디자인 경험이 없어도 괜찮습니다. 신청 후 접수번호가 발급되며, 확인
             메일을 보내드립니다.
           </p>
-          <Link href="/design/apply" className="dc-btn">
-            수강 신청하기
-          </Link>
+          <ApplyButton />
+          <p className="dc-cta-note">
+            신청 접수는 이벤터스 행사 페이지에서 진행됩니다.
+          </p>
         </div>
       </section>
     </main>

@@ -23,24 +23,36 @@
 
 ### 2) Claude Design 특강 사이트 — `src/app/(design)`
 
-- **특강 랜딩** (`/design`): 히어로·개요·교육 대상·목표·5부 커리큘럼·실습 프로젝트·
-  교육 방식·기대 효과·90분 시간표·FAQ
-- **전용 신청 폼** (`/design/apply`): 과정 선택 없이 특강 단일 신청.
-  디자인 경험 수준과 "만들고 싶은 것"을 추가로 받습니다
-- **접수 완료** (`/design/complete`): `CD-YYYYMMDD-XXXXXX` 형식 접수번호 발급
-- **전용 접수 현황** (`/design/admin`): 특강 신청만 조회
-- **전용 접수 API** (`/api/design/applications`)
+한 페이지 랜딩(`/design`)으로, **신청 접수는 이벤터스 행사 페이지에서 처리**합니다.
+
+- 히어로·개요·교육 대상·목표·5부 커리큘럼·실습 프로젝트·교육 방식·기대 효과·
+  90분 시간표·FAQ·신청 안내
+- **신청 안내** (`#apply`): 행사 정보 카드 + **QR 코드** + 이벤터스 바로가기.
+  QR 은 `EVENT.url` 값으로 서버에서 생성되므로 링크를 바꾸면 QR 도 함께 바뀝니다
+- 사이트의 모든 "신청하기" 버튼(헤더·히어로·신청 안내·하단 CTA)이 행사 페이지로 연결
 - **전용 브랜드**: 크림 `#F5F2EC` · 코랄 `#D97757` · 잉크 `#1F1E1D`
 
-두 사이트의 접수 데이터는 분리되어 있습니다.
-메인은 `applications` 테이블(또는 `data/applications.json`),
-특강은 `design_applications` 테이블(또는 `data/design-applications.json`)을 사용합니다.
+행사 링크와 일시·장소·참가비는 `src/lib/design-course.ts` 의 `EVENT` 객체에서 관리합니다.
+`date` / `place` / `fee` / `deadline` 은 비어 있으면 화면에 표시되지 않습니다.
+
+```ts
+export const EVENT = {
+  url: "https://event-us.kr/aiintersyslec/event/133127",
+  date: "",      // 예: "2026년 9월 3일 (목) 19:00"
+  place: "",     // 예: "온라인 (Zoom)"
+  fee: "",       // 예: "무료"
+  deadline: "",  // 예: "2026년 9월 1일 (화) 18:00"
+};
+```
+
+> 메인 사이트만 자체 신청 폼과 접수 데이터(`applications`)를 갖습니다.
 
 ## 기술 스택
 
 - Next.js 16 (App Router, 라우트 그룹 기반 다중 루트 레이아웃) · React 19 · TypeScript
 - 저장 백엔드: Postgres (`DATABASE_URL`) 또는 JSON 파일 폴백
 - 메일: Resend (`RESEND_API_KEY`), 미설정 시 발송 생략
+- QR 생성: `qrcode` (서버에서 SVG 생성, 외부 요청 없음)
 
 ## 실행 방법
 
@@ -62,9 +74,6 @@ npm run build && npm start   # 프로덕션
 | `RESEND_API_KEY` | 접수 확인 메일 발송용 (미설정 시 발송 생략) | — |
 | `MAIL_FROM` | 발신 주소 | Resend 기본 주소 |
 | `ADMIN_EMAIL` | 신규 접수 알림 수신 주소 | — |
-| `DESIGN_ADMIN_PASSWORD` | 특강 접수 현황 전용 비밀번호 | `ADMIN_PASSWORD` |
-| `DESIGN_MAIL_FROM` | 특강 접수 메일 발신 주소 | `MAIL_FROM` |
-| `DESIGN_ADMIN_EMAIL` | 특강 접수 알림 수신 주소 | `ADMIN_EMAIL` |
 
 > 운영 환경에서는 `ADMIN_PASSWORD` 를 반드시 변경하세요.
 
@@ -88,7 +97,7 @@ async rewrites() {
 ## 콘텐츠 수정
 
 - 메인 사이트 과정 목록: `src/lib/courses.ts`
-- 특강 사이트 콘텐츠(커리큘럼·시간표·FAQ 등): `src/lib/design-course.ts`
+- 특강 사이트 콘텐츠(커리큘럼·시간표·FAQ)와 행사 링크: `src/lib/design-course.ts`
 
 ## 과정 목록 수정
 
