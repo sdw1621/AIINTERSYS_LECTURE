@@ -13,6 +13,7 @@
   --dc-paper: #ffffff;
   --dc-accent: #d97757;
   --dc-accent-deep: #b8552f;
+  --dc-accent-deeper: #9a4526;
   --dc-accent-soft: #fbeee7;
   --dc-radius: 16px;
   --dc-shadow: 0 14px 40px rgba(31, 30, 29, 0.09);
@@ -140,17 +141,18 @@ body.dc {
   border: none;
   cursor: pointer;
   font-family: inherit;
-  background: var(--dc-accent);
+  /* 흰 글자 대비를 위해 진한 코랄을 기본 배경으로 사용합니다. */
+  background: var(--dc-accent-deep);
   color: #fff;
   font-weight: 800;
   font-size: 16px;
   padding: 15px 32px;
   border-radius: 999px;
-  box-shadow: 0 10px 24px rgba(217, 119, 87, 0.32);
+  box-shadow: 0 10px 24px rgba(154, 69, 38, 0.3);
   transition: transform 0.15s ease, background 0.15s ease;
 }
 .dc-btn:hover {
-  background: var(--dc-accent-deep);
+  background: var(--dc-accent-deeper);
   color: #fff;
   transform: translateY(-1px);
 }
@@ -171,6 +173,28 @@ body.dc {
 .dc-btn.ghost:hover {
   background: var(--dc-ink);
   color: #fff;
+}
+
+/* `.dc a` 의 색상 규칙(클래스+엘리먼트)이 `.dc-btn`(클래스 1개)보다
+   우선순위가 높아 버튼 글자색을 덮어씁니다. a.<클래스> 로 명시해 되돌립니다. */
+.dc a.dc-btn,
+.dc a.dc-btn:hover {
+  color: #fff;
+}
+.dc a.dc-btn.ghost {
+  color: var(--dc-ink);
+}
+.dc a.dc-btn.ghost:hover {
+  color: #fff;
+}
+.dc-cta a.dc-btn {
+  color: var(--dc-accent-deep);
+}
+.dc-cta a.dc-btn:hover {
+  color: #fff;
+}
+.dc a.dc-logo {
+  color: var(--dc-ink);
 }
 
 /* ---------- 히어로 ---------- */
@@ -702,12 +726,12 @@ body.dc {
 .dc-cta-note {
   margin: 16px auto 0;
   font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 /* ---------- 하단 CTA & 푸터 ---------- */
 .dc-cta {
-  background: var(--dc-accent);
+  background: var(--dc-accent-deep);
   color: #fff;
   text-align: center;
   padding: 68px 0;
@@ -720,7 +744,7 @@ body.dc {
   letter-spacing: -0.8px;
 }
 .dc-cta p {
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.94);
   max-width: 46ch;
   margin: 0 auto 26px;
 }
