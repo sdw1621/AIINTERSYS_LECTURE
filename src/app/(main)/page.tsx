@@ -55,13 +55,24 @@ export default function HomePage() {
                     </span>
                   ))}
                 </div>
-                {c.detailHref && (
-                  <Link href={c.detailHref} className="detail-link">
-                    커리큘럼 자세히 보기 →
-                  </Link>
-                )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="side-site">
+            <div>
+              <strong>Claude Design을 활용한 AI 디자인 실무</strong>
+              <p>
+                90분 실습 특강은 별도 사이트에서 소개·접수하고 있습니다.
+              </p>
+            </div>
+            <Link href="/design" className="side-site-link">
+              특강 사이트 열기 →
+            </Link>
           </div>
         </div>
       </section>

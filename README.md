@@ -1,21 +1,46 @@
-# AI인터시스 교육과정 온라인 수강 신청 접수 사이트
+# AI인터시스 교육 사이트
 
-AI인터시스(AIintersys) AX 교육과정의 **온라인 수강 신청**을 받는 웹사이트입니다.
-방문자가 원하는 과정을 선택해 신청서를 제출하면 접수번호가 발급되고, 관리자는
-접수 현황을 조회·다운로드할 수 있습니다.
+하나의 Next.js 프로젝트 안에서 **서로 독립된 두 개의 사이트**를 운영합니다.
+각 사이트는 자체 헤더·푸터·디자인 시스템·신청 폼·접수 데이터를 갖습니다.
+
+| 사이트 | 경로 | 성격 |
+| --- | --- | --- |
+| AI인터시스 교육과정 접수 | `/` | AX 교육과정 전체 목록 + 통합 신청 폼 |
+| Claude Design 특강 | `/design` | 90분 단일 특강 전용 랜딩 + 전용 신청 폼 |
+
+두 사이트는 Next.js **라우트 그룹**(`src/app/(main)`, `src/app/(design)`)으로 나뉘며
+각각 자체 루트 레이아웃을 가지므로 CSS·헤더·메타데이터가 서로 섞이지 않습니다.
 
 ## 주요 기능
+
+### 1) AI인터시스 교육과정 사이트 — `src/app/(main)`
 
 - **과정 소개 + 신청 폼** (`/`): 개설 과정 카드와 수강 신청 폼을 한 페이지에 제공
 - **접수 완료 페이지** (`/complete`): 접수번호 발급 및 안내
 - **관리자 페이지** (`/admin`): 비밀번호로 보호된 접수 현황 조회 + CSV 다운로드
 - **접수 API** (`/api/applications`): 서버 사이드 유효성 검증 후 저장
-- **AI인터시스 브랜드** 적용: 딥블루 `#1E40AF` · 스카이블루 `#60A5FA`, Pretendard 폰트
+- **AI인터시스 브랜드**: 딥블루 `#1E40AF` · 스카이블루 `#60A5FA`, Pretendard 폰트
+
+### 2) Claude Design 특강 사이트 — `src/app/(design)`
+
+- **특강 랜딩** (`/design`): 히어로·개요·교육 대상·목표·5부 커리큘럼·실습 프로젝트·
+  교육 방식·기대 효과·90분 시간표·FAQ
+- **전용 신청 폼** (`/design/apply`): 과정 선택 없이 특강 단일 신청.
+  디자인 경험 수준과 "만들고 싶은 것"을 추가로 받습니다
+- **접수 완료** (`/design/complete`): `CD-YYYYMMDD-XXXXXX` 형식 접수번호 발급
+- **전용 접수 현황** (`/design/admin`): 특강 신청만 조회
+- **전용 접수 API** (`/api/design/applications`)
+- **전용 브랜드**: 크림 `#F5F2EC` · 코랄 `#D97757` · 잉크 `#1F1E1D`
+
+두 사이트의 접수 데이터는 분리되어 있습니다.
+메인은 `applications` 테이블(또는 `data/applications.json`),
+특강은 `design_applications` 테이블(또는 `data/design-applications.json`)을 사용합니다.
 
 ## 기술 스택
 
-- Next.js 16 (App Router) · React 19 · TypeScript
-- 저장 백엔드: JSON 파일 스토어 (`data/applications.json`)
+- Next.js 16 (App Router, 라우트 그룹 기반 다중 루트 레이아웃) · React 19 · TypeScript
+- 저장 백엔드: Postgres (`DATABASE_URL`) 또는 JSON 파일 폴백
+- 메일: Resend (`RESEND_API_KEY`), 미설정 시 발송 생략
 
 ## 실행 방법
 
@@ -33,8 +58,37 @@ npm run build && npm start   # 프로덕션
 | 변수 | 설명 | 기본값 |
 | --- | --- | --- |
 | `ADMIN_PASSWORD` | 관리자 페이지/조회 API 비밀번호 | `aiintersys` |
+| `DATABASE_URL` | Postgres 접속 문자열 (미설정 시 JSON 파일 저장) | — |
+| `RESEND_API_KEY` | 접수 확인 메일 발송용 (미설정 시 발송 생략) | — |
+| `MAIL_FROM` | 발신 주소 | Resend 기본 주소 |
+| `ADMIN_EMAIL` | 신규 접수 알림 수신 주소 | — |
+| `DESIGN_ADMIN_PASSWORD` | 특강 접수 현황 전용 비밀번호 | `ADMIN_PASSWORD` |
+| `DESIGN_MAIL_FROM` | 특강 접수 메일 발신 주소 | `MAIL_FROM` |
+| `DESIGN_ADMIN_EMAIL` | 특강 접수 알림 수신 주소 | `ADMIN_EMAIL` |
 
 > 운영 환경에서는 `ADMIN_PASSWORD` 를 반드시 변경하세요.
+
+### 특강 사이트를 별도 도메인으로 서비스하기
+
+`/design` 을 `design.example.com` 같은 별도 도메인으로 노출하려면
+Vercel 에서 해당 도메인을 프로젝트에 추가한 뒤 `next.config.mjs` 에 rewrite 를 두면 됩니다.
+
+```js
+async rewrites() {
+  return [
+    {
+      source: "/:path*",
+      has: [{ type: "host", value: "design.example.com" }],
+      destination: "/design/:path*",
+    },
+  ];
+}
+```
+
+## 콘텐츠 수정
+
+- 메인 사이트 과정 목록: `src/lib/courses.ts`
+- 특강 사이트 콘텐츠(커리큘럼·시간표·FAQ 등): `src/lib/design-course.ts`
 
 ## 과정 목록 수정
 

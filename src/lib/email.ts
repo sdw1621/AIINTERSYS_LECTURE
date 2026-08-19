@@ -1,59 +1,13 @@
 import type { Application } from "./store";
+import { esc, sendMail } from "./mailer";
 
 /* ------------------------------------------------------------------ *
- * 이메일 자동발송: RESEND_API_KEY 가 있으면 Resend REST API 로 발송,
- * 없으면 콘솔에 로그만 남기고 접수는 정상 진행 (graceful fallback).
+ * AI인터시스 교육과정(메인 사이트) 접수 메일 템플릿 및 발송.
+ * 실제 전송은 lib/mailer.ts 가 담당합니다.
  * ------------------------------------------------------------------ */
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-// 발신 주소: 도메인 인증 전에는 Resend 제공 주소(onboarding@resend.dev)를 사용할 수 있습니다.
-const MAIL_FROM = process.env.MAIL_FROM ?? "AI인터시스 <onboarding@resend.dev>";
 // 신규 접수 알림을 받을 관리자 주소 (선택)
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
-
-type SendArgs = {
-  to: string | string[];
-  subject: string;
-  html: string;
-};
-
-async function sendMail({ to, subject, html }: SendArgs): Promise<boolean> {
-  if (!RESEND_API_KEY) {
-    console.log(
-      `[email:skipped] RESEND_API_KEY 미설정 → 발송 생략. to=${
-        Array.isArray(to) ? to.join(",") : to
-      } subject="${subject}"`
-    );
-    return false;
-  }
-
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ from: MAIL_FROM, to, subject, html }),
-    });
-    if (!res.ok) {
-      const body = await res.text();
-      console.error(`[email:error] Resend ${res.status}: ${body}`);
-      return false;
-    }
-    return true;
-  } catch (err) {
-    console.error("[email:error]", err);
-    return false;
-  }
-}
-
-function esc(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
 
 function applicantTemplate(app: Application): string {
   return `

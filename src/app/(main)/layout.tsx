@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import "./globals.css";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: "AI인터시스 교육과정 수강 신청",
