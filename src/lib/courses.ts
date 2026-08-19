@@ -6,10 +6,23 @@ export type Course = {
   format: string;
   capacity: string;
   tags: string[];
+  /** 상세 소개 페이지가 있는 경우의 경로 */
+  detailHref?: string;
 };
 
 // 접수 가능한 교육과정 목록. 필요 시 이 배열만 수정하면 폼/카드에 자동 반영됩니다.
 export const COURSES: Course[] = [
+  {
+    id: "claude-design",
+    title: "Claude Design을 활용한 AI 디자인 실무",
+    subtitle:
+      "브랜드 콘셉트부터 디자인 시스템, 포스터·카드뉴스·상세페이지까지 90분 실습 특강",
+    schedule: "90분 특강 (세팅·휴식 20분 별도)",
+    format: "이론 + 시연 + 단계별 실습",
+    capacity: "선착순 30명",
+    tags: ["디자인", "입문 가능", "실습"],
+    detailHref: "/courses/claude-design",
+  },
   {
     id: "ax-intro",
     title: "AX 실무 입문 과정",

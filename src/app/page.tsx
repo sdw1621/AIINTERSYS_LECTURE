@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { COURSES } from "@/lib/courses";
 import ApplicationForm from "./ApplicationForm";
 
@@ -54,6 +55,11 @@ export default function HomePage() {
                     </span>
                   ))}
                 </div>
+                {c.detailHref && (
+                  <Link href={c.detailHref} className="detail-link">
+                    커리큘럼 자세히 보기 →
+                  </Link>
+                )}
               </div>
             ))}
           </div>
