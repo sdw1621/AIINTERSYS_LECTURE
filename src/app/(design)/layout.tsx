@@ -32,7 +32,7 @@ export default function DesignSiteLayout({
               </span>
               <span className="name">
                 <b>Claude Design 특강</b>
-                <span>AI 디자인 실무 90분</span>
+                <span>Claude Design Skill 실무 90분</span>
               </span>
             </Link>
             <nav className="dc-nav">
@@ -80,3 +80,4 @@ export default function DesignSiteLayout({
     </html>
   );
 }
+
