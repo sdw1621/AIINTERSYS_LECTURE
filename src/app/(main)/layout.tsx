@@ -1,40 +1,83 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import "../globals.css";
+import { COURSE, EVENT } from "@/lib/design-course";
+import "./design.css";
+
+/* Claude Design 특강 전용 루트 레이아웃.
+   메인 AI인터시스 사이트와 헤더·푸터·스타일을 공유하지 않는 독립 사이트입니다. */
 
 export const metadata: Metadata = {
-  title: "AI인터시스 교육과정 수강 신청",
-  description:
-    "AI인터시스 AX 교육과정 온라인 수강 신청 접수 사이트. 원하는 과정을 선택하고 간편하게 신청하세요.",
+  title: `${COURSE.title} | Claude Design 특강`,
+  description: COURSE.description,
+  openGraph: {
+    title: COURSE.title,
+    description: COURSE.description,
+    type: "website",
+  },
 };
 
-export default function RootLayout({
+export default function DesignSiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <html lang="ko">
-      <body>
-        <header className="site-header">
-          <div className="container inner">
-            <Link href="/" className="brand">
-              <span className="dot" />
-              AI인터시스
+      <body className="dc">
+        <header className="dc-header">
+          <div className="dc-wrap inner">
+            <Link href="/design" className="dc-logo">
+              <span className="mark" aria-hidden="true">
+                CD
+              </span>
+              <span className="name">
+                <b>Claude Design 특강</b>
+                <span>Claude Design Skill 실무 90분</span>
+              </span>
             </Link>
-            <Link href="/admin" className="header-link">
-              관리자
-            </Link>
+            <nav className="dc-nav">
+              <Link href="/design#curriculum" className="hide-sm">
+                커리큘럼
+              </Link>
+              <Link href="/design#timeline" className="hide-sm">
+                시간표
+              </Link>
+              <Link href="/design#faq" className="hide-sm">
+                FAQ
+              </Link>
+              <Link href="/design#apply" className="hide-sm">
+                신청 안내
+              </Link>
+              <a
+                href={EVENT.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="dc-btn-sm"
+              >
+                신청하기
+              </a>
+            </nav>
           </div>
         </header>
+
         {children}
-        <footer className="site-footer">
-          <div className="container">
-            © {new Date().getFullYear()} AI인터시스 (AIintersys) · 교육과정 수강
-            신청 센터
+
+        <footer className="dc-footer">
+          <div className="dc-wrap inner">
+            <span>
+              © {new Date().getFullYear()} {COURSE.host} · {COURSE.title}
+            </span>
+            <span>
+              <a href={EVENT.url} target="_blank" rel="noopener noreferrer">
+                이벤터스에서 신청
+              </a>
+              {" · "}
+              <Link href="/">AI인터시스 전체 교육과정</Link>
+            </span>
           </div>
         </footer>
       </body>
     </html>
   );
 }
+
