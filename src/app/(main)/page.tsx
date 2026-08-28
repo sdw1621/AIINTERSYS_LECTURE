@@ -1,92 +1,324 @@
 import Link from "next/link";
-import { COURSES } from "@/lib/courses";
-import ApplicationForm from "./ApplicationForm";
+import {
+  AUDIENCE,
+  COURSE,
+  EVENT,
+  FACTS,
+  FAQ,
+  FLOW,
+  GOALS,
+  OUTPUTS,
+  PARTS,
+  TIMELINE,
+  eventDetails,
+} from "@/lib/design-course";
 
-export default function HomePage() {
+/** 신청은 이벤터스 행사 페이지에서 접수합니다. */
+function ApplyButton({ className = "dc-btn" }: { className?: string }) {
+  return (
+    <a
+      href={EVENT.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      이벤터스에서 신청하기
+    </a>
+  );
+}
+
+export default function DesignLandingPage() {
+
   return (
     <main>
-      <section className="hero">
-        <div className="container">
-          <span className="badge">2026 AX 교육과정 수강 신청</span>
+      {/* 히어로 */}
+      <section className="dc-hero">
+        <div className="dc-wrap">
+          <span className="dc-eyebrow">90분 실습 특강 · {COURSE.capacity}</span>
           <h1>
-            실무에 바로 쓰는 AI 역량,
+            일하는 방식을,
             <br />
-            AI인터시스에서 시작하세요
+            <em>90분</em> 만에 디자인.
           </h1>
-          <p>
-            생성형 AI와 업무 자동화를 현업에 적용하는 실습 중심 교육과정입니다.
-            원하는 과정을 선택하고 아래에서 간편하게 수강 신청을 접수하세요.
+          <p className="sub">
+            Claude Design의 Skill로 회사에서 실제로 쓰는 자료를 직접 만들고,
+            반복되는 업무를 나만의 AI 작업 방식으로 바꾸는 방법을 배웁니다.
+            사전 지식이 없어도 따라올 수 있도록 실습 중심으로 진행합니다.
           </p>
-          <a href="#apply" className="cta">
-            지금 신청하기 →
-          </a>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <h2>개설 과정</h2>
-          <p className="lead">
-            수준과 목적에 맞는 과정을 선택할 수 있습니다.
-          </p>
-          <div className="course-grid">
-            {COURSES.map((c) => (
-              <div className="course-card" key={c.id}>
-                <h3>{c.title}</h3>
-                <p className="sub">{c.subtitle}</p>
-                <div className="course-meta">
-                  <div className="row">
-                    <span className="k">일정</span>
-                    <span>{c.schedule}</span>
-                  </div>
-                  <div className="row">
-                    <span className="k">방식</span>
-                    <span>{c.format}</span>
-                  </div>
-                  <div className="row">
-                    <span className="k">정원</span>
-                    <span>{c.capacity}</span>
-                  </div>
-                </div>
-                <div className="tags">
-                  {c.tags.map((t) => (
-                    <span className="tag" key={t}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
+          <div className="actions">
+            <ApplyButton />
+            <Link href="#curriculum" className="dc-btn ghost">
+              커리큘럼 보기
+            </Link>
+          </div>
+          <div className="dc-facts">
+            {FACTS.map((f) => (
+              <div className="fact" key={f.k}>
+                <span className="k">{f.k}</span>
+                <span className="v">{f.v}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <div className="side-site">
-            <div>
-              <strong>Claude Design을 활용한 AI 디자인 실무</strong>
-              <p>
-                90분 실습 특강은 별도 사이트에서 소개·접수하고 있습니다.
-              </p>
-            </div>
-            <Link href="/design" className="side-site-link">
-              특강 사이트 열기 →
-            </Link>
+      {/* 강의 개요 */}
+      <section className="dc-section paper" id="overview">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Overview</p>
+          <h2>자료 한 장이 아니라, 업무 방식을 만듭니다</h2>
+          <p className="desc">
+            발표자료와 보고서부터 조사·분석 자료, 업무 콘텐츠까지 다양한 실무
+            사례를 다루며, 상황에 따라 적절한 Skill을 선택하고 조합하는 방법을
+            익힙니다. 마지막에는 자주 반복하는 업무를 하나의 절차로 정리해 다음
+            업무에도 그대로 활용할 수 있는 나만의 AI Skill로 발전시킵니다.
+          </p>
+          <div className="dc-flow">
+            {FLOW.map((s) => (
+              <div className="step" key={s.no}>
+                <span className="n">STEP {s.no}</span>
+                <strong>{s.title}</strong>
+                <p>{s.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="section" id="apply" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <h2>수강 신청</h2>
-          <p className="lead">
-            아래 정보를 입력하면 접수번호가 발급됩니다. 접수 확인 후 안내
-            메일/연락을 드립니다.
+      {/* 교육 대상 */}
+      <section className="dc-section" id="audience">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Who</p>
+          <h2>이런 분들을 위한 특강입니다</h2>
+          <p className="desc">
+            만들어야 할 보고서·발표자료·공지가 계속 생기는 분이라면, 90분 안에
+            바로 쓸 수 있는 결과물과 작업 방식을 만들어 가시게 됩니다.
           </p>
-          <ApplicationForm courses={COURSES} />
+          <div className="dc-audience">
+            {AUDIENCE.map((a) => (
+              <div className="card" key={a.title}>
+                <span className="emoji" aria-hidden="true">
+                  {a.icon}
+                </span>
+                <strong>{a.title}</strong>
+                <p>{a.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 교육 목표 */}
+      <section className="dc-section paper" id="goals">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Goals</p>
+          <h2>수업이 끝나면 할 수 있게 되는 것</h2>
+          <ul className="dc-goals">
+            {GOALS.map((g, i) => (
+              <li key={g}>
+                <span className="idx">{String(i + 1).padStart(2, "0")}</span>
+                <span>{g}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 커리큘럼 */}
+      <section className="dc-section" id="curriculum">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Curriculum</p>
+          <h2>1부에서 5부까지, 하나의 업무를 계속 키웁니다</h2>
+          <p className="desc">
+            각 부가 따로 노는 예제가 아니라, 앞에서 만든 결과물을 뒤에서 그대로
+            이어 확장하고 마지막에 재사용 가능한 Skill로 정리하는 방식으로
+            진행합니다.
+          </p>
+          <div className="dc-parts">
+            {PARTS.map((p) => (
+              <article className="dc-part" key={p.no}>
+                <div className="head">
+                  <span className="no">{p.no}</span>
+                  <h3>{p.title}</h3>
+                  <p>{p.summary}</p>
+                </div>
+                <ul>
+                  {p.items.map((it) => (
+                    <li key={it}>{it}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 실습 프로젝트 */}
+      <section className="dc-section paper" id="project">
+        <div className="dc-wrap">
+          <div className="dc-project">
+            <p className="dc-kicker">Hands-on Project</p>
+            <h2>하나의 업무, 여섯 가지 결과물</h2>
+            <p>
+              회사에서 실제로 활용할 수 있는 업무를 선정해 발표자료·보고서·조사
+              자료·업무 콘텐츠 등 다양한 실무 결과물을 제작합니다. 업무 목적에
+              따라 필요한 Skill을 선택하고, 여러 Skill을 조합해 하나의 결과물을
+              발전시킨 뒤, 마지막에는 그 과정을 나만의 업무 Skill로 정리합니다.
+            </p>
+            <div className="dc-outputs">
+              {OUTPUTS.map((o) => (
+                <div className="item" key={o.name}>
+                  <span aria-hidden="true">{o.icon}</span>
+                  {o.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 교육 방식 */}
+      <section className="dc-section" id="method">
+        <div className="dc-wrap">
+          <p className="dc-kicker">How</p>
+          <h2>이론 · 시연 · 단계별 실습</h2>
+          <p className="desc">
+            각 Skill의 기능을 단순히 소개하는 데 그치지 않고, 실제 업무 상황을
+            예시로 어떤 Skill을 선택하고 어떻게 조합하는지를 보여주며 결과물을
+            단계적으로 완성합니다.
+          </p>
+          <div className="dc-methods">
+            <div className="m">
+              <span className="tag">이론</span>
+              <p>필요한 개념만 짧고 분명하게 정리합니다.</p>
+            </div>
+            <div className="m">
+              <span className="tag">시연</span>
+              <p>강사가 실제로 만드는 과정을 화면으로 보여 줍니다.</p>
+            </div>
+            <div className="m">
+              <span className="tag">단계별 실습</span>
+              <p>같은 흐름을 따라 각자 자기 결과물을 만들어 갑니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 기대 효과 */}
+      <section className="dc-section paper" id="effect">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Outcome</p>
+          <h2>수강 후 기대 효과</h2>
+          <p className="dc-effect">
+            단순히 AI로 자료를 만드는 방법을 넘어,{" "}
+            <strong>
+              업무 목적에 맞는 Skill을 고르고 여러 Skill을 조합해 필요한 결과물을
+              만드는 방법
+            </strong>{" "}
+            을 익힙니다. 나아가 반복 업무를 AI가 다시 실행할 수 있는 절차로
+            정리해, 자신의 업무에 맞는 재사용 가능한 AI 작업 방식을 만들 수
+            있습니다.
+          </p>
+        </div>
+      </section>
+
+      {/* 시간표 */}
+      <section className="dc-section" id="timeline">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Timetable</p>
+          <h2>90분 진행 순서</h2>
+          <p className="desc">
+            총 90분 구성이며, 세팅 및 쉬는 시간 20분 정도가 추가됩니다.
+          </p>
+          <ol className="dc-timeline">
+            {TIMELINE.map((t) => (
+              <li key={t.time}>
+                <span className="time">{t.time}</span>
+                <div>
+                  <strong>{t.label}</strong>
+                  <p>{t.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="dc-section paper" id="faq">
+        <div className="dc-wrap">
+          <p className="dc-kicker">FAQ</p>
+          <h2>자주 묻는 질문</h2>
+          <div className="dc-faq">
+            {FAQ.map((f) => (
+              <details key={f.q}>
+                <summary>{f.q}</summary>
+                <p className="a">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 행사 안내 · 신청 */}
+      <section className="dc-section" id="apply">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Registration</p>
+          <h2>신청 안내</h2>
+          <p className="desc">
+            신청 접수와 결제, 일정 안내는 모두 이벤터스 행사 페이지에서
+            진행됩니다. 아래 버튼을 눌러 행사 페이지에서 신청해 주세요.
+          </p>
+
+          <div className="dc-event">
+            <div className="dc-event-body">
+              <span className="dc-event-badge">이벤터스 행사 페이지</span>
+              <h3>{COURSE.title}</h3>
+              <dl className="dc-event-meta">
+                {eventDetails().map((d) => (
+                  <div className="row" key={d.k}>
+                    <dt>{d.k}</dt>
+                    <dd>{d.v}</dd>
+                  </div>
+                ))}
+                <div className="row">
+                  <dt>교육 시간</dt>
+                  <dd>{COURSE.duration}</dd>
+                </div>
+                <div className="row">
+                  <dt>정원</dt>
+                  <dd>{COURSE.capacity}</dd>
+                </div>
+                <div className="row">
+                  <dt>준비물</dt>
+                  <dd>인터넷이 연결된 노트북 1대</dd>
+                </div>
+              </dl>
+              <p className="dc-event-url">{EVENT.url}</p>
+            </div>
+            <div className="dc-event-action">
+              <ApplyButton />
+              <span className="dc-event-hint">새 창으로 열립니다</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 하단 CTA */}
+      <section className="dc-cta">
+        <div className="dc-wrap">
+          <h2>{COURSE.tagline}</h2>
+          <p>
+            사전 지식이 없어도 괜찮습니다. 이벤터스 행사 페이지에서 신청하실 수
+            있습니다.
+          </p>
+          <ApplyButton />
+          <p className="dc-cta-note">
+            신청 접수는 이벤터스 행사 페이지에서 진행됩니다.
+          </p>
         </div>
       </section>
     </main>
   );
 }
+
