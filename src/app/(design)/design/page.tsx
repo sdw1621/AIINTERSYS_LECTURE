@@ -36,14 +36,14 @@ export default function DesignLandingPage() {
         <div className="dc-wrap">
           <span className="dc-eyebrow">90분 실습 특강 · {COURSE.capacity}</span>
           <h1>
-            브랜드 하나를,
+            일하는 방식을,
             <br />
-            <em>90분</em> 만에.
+            <em>90분</em> 만에 디자인.
           </h1>
           <p className="sub">
-            AI와 대화하며 브랜드 디자인을 기획하고, 하나의 디자인 시스템을
-            포스터·카드뉴스·상세페이지로 확장하는 방법을 배웁니다. 디자인 경험이
-            많지 않아도 따라올 수 있도록 실습 중심으로 진행합니다.
+            Claude Design의 Skill로 회사에서 실제로 쓰는 자료를 직접 만들고,
+            반복되는 업무를 나만의 AI 작업 방식으로 바꾸는 방법을 배웁니다.
+            사전 지식이 없어도 따라올 수 있도록 실습 중심으로 진행합니다.
           </p>
           <div className="actions">
             <ApplyButton />
@@ -66,12 +66,12 @@ export default function DesignLandingPage() {
       <section className="dc-section paper" id="overview">
         <div className="dc-wrap">
           <p className="dc-kicker">Overview</p>
-          <h2>이미지 한 장이 아니라, 브랜드 한 벌을 만듭니다</h2>
+          <h2>자료 한 장이 아니라, 업무 방식을 만듭니다</h2>
           <p className="desc">
-            Claude Design의 주요 기능을 이해하고, AI를 활용해 브랜드 디자인을
-            기획하고 다양한 디자인 결과물로 확장하는 방법을 학습합니다. 디자인
-            경험이 많지 않은 사람도 AI와 대화하며 디자인을 제작하고 수정할 수
-            있도록 실습 중심으로 진행합니다.
+            발표자료와 보고서부터 조사·분석 자료, 업무 콘텐츠까지 다양한 실무
+            사례를 다루며, 상황에 따라 적절한 Skill을 선택하고 조합하는 방법을
+            익힙니다. 마지막에는 자주 반복하는 업무를 하나의 절차로 정리해 다음
+            업무에도 그대로 활용할 수 있는 나만의 AI Skill로 발전시킵니다.
           </p>
           <div className="dc-flow">
             {FLOW.map((s) => (
@@ -91,8 +91,8 @@ export default function DesignLandingPage() {
           <p className="dc-kicker">Who</p>
           <h2>이런 분들을 위한 특강입니다</h2>
           <p className="desc">
-            디자이너가 아니어도, 만들어야 할 홍보물이 계속 생기는 분이라면
-            90분 안에 바로 쓸 수 있는 결과물을 만들어 가시게 됩니다.
+            만들어야 할 보고서·발표자료·공지가 계속 생기는 분이라면, 90분 안에
+            바로 쓸 수 있는 결과물과 작업 방식을 만들어 가시게 됩니다.
           </p>
           <div className="dc-audience">
             {AUDIENCE.map((a) => (
@@ -128,10 +128,11 @@ export default function DesignLandingPage() {
       <section className="dc-section" id="curriculum">
         <div className="dc-wrap">
           <p className="dc-kicker">Curriculum</p>
-          <h2>1부에서 5부까지, 하나의 브랜드를 계속 키웁니다</h2>
+          <h2>1부에서 5부까지, 하나의 업무를 계속 키웁니다</h2>
           <p className="desc">
             각 부가 따로 노는 예제가 아니라, 앞에서 만든 결과물을 뒤에서 그대로
-            이어 발전시키는 방식으로 진행합니다.
+            이어 확장하고 마지막에 재사용 가능한 Skill로 정리하는 방식으로
+            진행합니다.
           </p>
           <div className="dc-parts">
             {PARTS.map((p) => (
@@ -157,11 +158,12 @@ export default function DesignLandingPage() {
         <div className="dc-wrap">
           <div className="dc-project">
             <p className="dc-kicker">Hands-on Project</p>
-            <h2>하나의 디자인 시스템, 여섯 가지 결과물</h2>
+            <h2>하나의 업무, 여섯 가지 결과물</h2>
             <p>
-              가상의 브랜드 디자인을 만들고, 하나의 디자인 시스템을 기반으로 상품
-              홍보물·포스터·카드뉴스·상세페이지 등 다양한 결과물을 제작합니다.
-              이미 운영 중인 브랜드가 있다면 그 소재로 실습하셔도 됩니다.
+              회사에서 실제로 활용할 수 있는 업무를 선정해 발표자료·보고서·조사
+              자료·업무 콘텐츠 등 다양한 실무 결과물을 제작합니다. 업무 목적에
+              따라 필요한 Skill을 선택하고, 여러 Skill을 조합해 하나의 결과물을
+              발전시킨 뒤, 마지막에는 그 과정을 나만의 업무 Skill로 정리합니다.
             </p>
             <div className="dc-outputs">
               {OUTPUTS.map((o) => (
@@ -181,9 +183,9 @@ export default function DesignLandingPage() {
           <p className="dc-kicker">How</p>
           <h2>이론 · 시연 · 단계별 실습</h2>
           <p className="desc">
-            기초적인 디자인 개념부터 시작해 하나씩 결과물을 발전시키는 방식으로
-            진행하여, 디자인 경험이 없는 수강생도 쉽게 따라올 수 있도록
-            구성합니다.
+            각 Skill의 기능을 단순히 소개하는 데 그치지 않고, 실제 업무 상황을
+            예시로 어떤 Skill을 선택하고 어떻게 조합하는지를 보여주며 결과물을
+            단계적으로 완성합니다.
           </p>
           <div className="dc-methods">
             <div className="m">
@@ -208,9 +210,14 @@ export default function DesignLandingPage() {
           <p className="dc-kicker">Outcome</p>
           <h2>수강 후 기대 효과</h2>
           <p className="dc-effect">
-            단순히 AI로 이미지를 생성하는 방법을 넘어,{" "}
-            <strong>브랜드의 디자인 방향을 설정하고 일관된 디자인을 유지하면서</strong>{" "}
-            다양한 콘텐츠를 제작하는 AI 활용 방법을 익힐 수 있습니다.
+            단순히 AI로 자료를 만드는 방법을 넘어,{" "}
+            <strong>
+              업무 목적에 맞는 Skill을 고르고 여러 Skill을 조합해 필요한 결과물을
+              만드는 방법
+            </strong>{" "}
+            을 익힙니다. 나아가 반복 업무를 AI가 다시 실행할 수 있는 절차로
+            정리해, 자신의 업무에 맞는 재사용 가능한 AI 작업 방식을 만들 수
+            있습니다.
           </p>
         </div>
       </section>
@@ -302,8 +309,8 @@ export default function DesignLandingPage() {
         <div className="dc-wrap">
           <h2>{COURSE.tagline}</h2>
           <p>
-            디자인 경험이 없어도 괜찮습니다. 신청 후 접수번호가 발급되며, 확인
-            메일을 보내드립니다.
+            사전 지식이 없어도 괜찮습니다. 이벤터스 행사 페이지에서 신청하실 수
+            있습니다.
           </p>
           <ApplyButton />
           <p className="dc-cta-note">
@@ -314,3 +321,4 @@ export default function DesignLandingPage() {
     </main>
   );
 }
+
