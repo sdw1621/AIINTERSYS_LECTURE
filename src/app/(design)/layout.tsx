@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { COURSE, EVENT } from "@/lib/design-course";
-import "./design.css";
+import "../design.css";
 
 /* Claude Design 특강 전용 루트 레이아웃.
    메인 AI인터시스 사이트와 헤더·푸터·스타일을 공유하지 않는 독립 사이트입니다. */
