@@ -16,14 +16,14 @@ import {
 export default function ClaudeCodeLandingPage() {
   return (
     <CourseLanding
-      eyebrow={`4일 과정 · 총 12시간 · ${COURSE.capacity}`}
+      eyebrow={`2주 6회 과정 · 총 18시간 · ${COURSE.capacity}`}
       headline={{ before: "코드를 몰라도,", accent: "일은 자동화", after: "됩니다." }}
       intro={COURSE.description}
       facts={FACTS}
       overview={{
         heading: "설치조차 막막했다면, 여기서 시작합니다",
         body:
-          "Claude Code는 대화만으로 내 컴퓨터의 파일을 읽고 정리하고 문서를 만들어 주는 도구입니다. 이 과정은 그 첫 단추인 설치와 첫 실행부터 함께 하고, 네 번에 걸쳐 실무 자동화까지 넓힌 뒤, 마지막에는 반복 업무를 나만의 Skill로 저장하는 데까지 데려갑니다.",
+          "Claude Code는 대화만으로 내 컴퓨터의 파일을 읽고 정리하고 문서를 만들어 주는 도구입니다. 이 과정은 그 첫 단추인 설치와 첫 실행부터 함께 하고, 여섯 번에 걸쳐 실무 자동화까지 넓힌 뒤, 마지막에는 반복 업무를 나만의 Skill로 저장하는 데까지 데려갑니다.",
         flow: FLOW,
       }}
       audience={{
@@ -34,7 +34,7 @@ export default function ClaudeCodeLandingPage() {
       }}
       goals={{ heading: "수업이 끝나면 할 수 있게 되는 것", items: GOALS }}
       curriculum={{
-        heading: "1일차에서 4일차까지, 켜기부터 재사용까지",
+        heading: "1회차에서 6회차까지, 켜기부터 재사용까지",
         body:
           "회차마다 따로 노는 예제가 아니라, 앞 회차에서 만든 결과물을 다음 회차에서 그대로 이어 발전시킵니다. 마지막 날에는 그 과정을 재사용 가능한 Skill로 정리합니다.",
         parts: PARTS,
@@ -42,7 +42,7 @@ export default function ClaudeCodeLandingPage() {
       project={{
         heading: "손으로 하던 일, 여섯 가지를 맡겨 봅니다",
         body:
-          "실제 업무에서 자주 마주치는 작업들을 4일에 걸쳐 직접 시켜 보고 결과를 확인합니다. 가져오신 파일이 있다면 그 자료로 그대로 실습하셔도 됩니다.",
+          "실제 업무에서 자주 마주치는 작업들을 여섯 번에 걸쳐 직접 시켜 보고 결과를 확인합니다. 가져오신 파일이 있다면 그 자료로 그대로 실습하셔도 됩니다.",
         outputs: OUTPUTS,
       }}
       method={{
@@ -58,16 +58,16 @@ export default function ClaudeCodeLandingPage() {
             <strong>
               내 업무 파일을 대화로 정리시키고 결과를 검토해 다시 요청하는
             </strong>{" "}
-            기본기를 갖추게 됩니다. 나아가 12시간 동안 다뤄 본 작업 중 반복되는
+            기본기를 갖추게 됩니다. 나아가 18시간 동안 다뤄 본 작업 중 반복되는
             하나를 Skill로 저장해, 과정이 끝난 뒤에도 같은 업무에 그대로 불러 쓸
             수 있습니다.
           </>
         ),
       }}
       timeline={{
-        heading: "4일 진행 순서",
+        heading: "2주 6회 진행 순서",
         body:
-          "한 회차 3시간씩 총 4회, 12시간 과정입니다. 각 회차에는 20분 정도의 휴식이 포함되며, 앞 회차에서 만든 결과물을 다음 회차에서 이어 발전시킵니다.",
+          "2주 동안 월·수·금 저녁 19:00~22:00, 한 회차 3시간씩 총 6회 18시간 과정입니다. 각 회차에는 20분 정도의 휴식이 포함되며, 앞 회차에서 만든 결과물을 다음 회차에서 이어 발전시킵니다.",
         slots: TIMELINE,
       }}
       faq={{ heading: "자주 묻는 질문", items: FAQ }}
@@ -77,6 +77,7 @@ export default function ClaudeCodeLandingPage() {
         details: eventDetails(),
         extras: [
           { k: "교육 시간", v: COURSE.duration },
+          { k: "일정", v: COURSE.schedule },
           { k: "정원", v: COURSE.capacity },
           { k: "준비물", v: "노트북 1대 · Claude 계정" },
         ],
@@ -84,7 +85,7 @@ export default function ClaudeCodeLandingPage() {
       cta={{
         heading: COURSE.tagline,
         body:
-          "개발 지식이 없어도 괜찮습니다. 설치부터 함께 시작해 네 번의 수업이 끝나면, 내 업무를 대신 해주는 Skill 하나를 만들어 가시게 됩니다.",
+          "개발 지식이 없어도 괜찮습니다. 설치부터 함께 시작해 2주 뒤에는, 내 업무를 대신 해주는 Skill 하나를 만들어 가시게 됩니다.",
       }}
     />
   );
