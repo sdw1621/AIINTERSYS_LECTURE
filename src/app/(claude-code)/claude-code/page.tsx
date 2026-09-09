@@ -10,6 +10,7 @@ import {
   OUTPUTS,
   PARTS,
   TIMELINE,
+  NOTICE,
   eventDetails,
 } from "@/lib/claude-code-course";
 
@@ -71,6 +72,7 @@ export default function ClaudeCodeLandingPage() {
         slots: TIMELINE,
       }}
       faq={{ heading: "자주 묻는 질문", items: FAQ }}
+      notice={NOTICE}
       registration={{
         courseTitle: `${COURSE.title} — ${COURSE.subtitle}`,
         url: EVENT.url,
@@ -79,7 +81,7 @@ export default function ClaudeCodeLandingPage() {
           { k: "교육 시간", v: COURSE.duration },
           { k: "일정", v: COURSE.schedule },
           { k: "정원", v: COURSE.capacity },
-          { k: "준비물", v: "노트북 1대 · Claude 계정" },
+          { k: "준비물", v: "노트북 1대 · Claude Pro 이상 구독" },
         ],
       }}
       cta={{

@@ -29,6 +29,8 @@ export type CourseLandingProps = {
   outcome: { heading: string; body: React.ReactNode };
   timeline: { heading: string; body: string; slots: readonly Slot[] };
   faq: { heading: string; items: readonly Qa[] };
+  /** 신청 전 반드시 확인해야 하는 조건. 신청 안내 영역 맨 위에 강조해 표시합니다. */
+  notice?: { title: string; body: string };
   /** 신청 정보. url 이 비어 있으면 신청 버튼 대신 준비 중 안내를 보여 줍니다. */
   registration: {
     courseTitle: string;
@@ -258,6 +260,12 @@ export default function CourseLanding(p: CourseLandingProps) {
               ? "신청 접수와 결제, 일정 안내는 모두 이벤터스 행사 페이지에서 진행됩니다. 아래 버튼을 눌러 행사 페이지에서 신청해 주세요."
               : "행사 페이지가 열리는 대로 이 자리에 신청 버튼이 표시됩니다. 일정과 참가비도 함께 안내드리겠습니다."}
           </p>
+          {p.notice && (
+            <div className="dc-notice" role="note">
+              <strong>{p.notice.title}</strong>
+              <p>{p.notice.body}</p>
+            </div>
+          )}
           <div className="dc-event">
             <div className="dc-event-body">
               <span className="dc-event-badge">

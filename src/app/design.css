@@ -729,6 +729,30 @@ body.dc {
   color: rgba(255, 255, 255, 0.92);
 }
 
+
+/* ---------- 신청 전 필수 안내 ---------- */
+.dc-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--dc-accent-soft);
+  border: 1px solid var(--dc-accent);
+  border-left: 4px solid var(--dc-accent-deep);
+  border-radius: var(--dc-radius);
+  padding: 18px 22px;
+  margin-bottom: 18px;
+}
+.dc-notice strong {
+  font-size: 16px;
+  letter-spacing: -0.3px;
+  color: var(--dc-accent-deeper, var(--dc-accent-deep));
+}
+.dc-notice p {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--dc-ink-soft);
+}
+
 /* ---------- 하단 CTA & 푸터 ---------- */
 .dc-cta {
   background: var(--dc-accent-deep);
