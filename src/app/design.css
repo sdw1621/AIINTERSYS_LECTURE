@@ -753,6 +753,82 @@ body.dc {
   color: var(--dc-ink-soft);
 }
 
+/* 준비·설치 항목 */
+.dc-notice-items {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--dc-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.dc-notice-items b {
+  font-size: 13.5px;
+  color: var(--dc-ink);
+}
+.dc-notice-items ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dc-notice-items li {
+  background: var(--dc-paper);
+  border: 1px solid var(--dc-line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.dc-notice-items .note {
+  font-size: 13px;
+  color: var(--dc-muted);
+}
+
+/* ---------- 수강료 (정가·할인가) ---------- */
+.dc-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid var(--dc-line);
+}
+.dc-price-badge {
+  display: inline-block;
+  background: var(--dc-accent-deep);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+.dc-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dc-price-row .old {
+  color: var(--dc-muted);
+  font-size: 17px;
+  text-decoration-thickness: 1.5px;
+}
+.dc-price-row .new {
+  font-size: clamp(28px, 4vw, 34px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--dc-accent-deeper, var(--dc-accent-deep));
+}
+.dc-price-note {
+  font-size: 13px;
+  color: var(--dc-muted);
+}
+
 /* ---------- 하단 CTA & 푸터 ---------- */
 .dc-cta {
   background: var(--dc-accent-deep);

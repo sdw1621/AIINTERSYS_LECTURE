@@ -30,7 +30,21 @@ export type CourseLandingProps = {
   timeline: { heading: string; body: string; slots: readonly Slot[] };
   faq: { heading: string; items: readonly Qa[] };
   /** 신청 전 반드시 확인해야 하는 조건. 신청 안내 영역 맨 위에 강조해 표시합니다. */
-  notice?: { title: string; body: string };
+  notice?: {
+    title: string;
+    body: string;
+    /** 준비·설치 항목 (선택) */
+    itemsTitle?: string;
+    items?: readonly string[];
+    itemsNote?: string;
+  };
+  /** 수강료. 정가와 할인가를 함께 보여 줍니다. */
+  price?: {
+    original: string;
+    discounted: string;
+    badge?: string;
+    note?: string;
+  };
   /** 신청 정보. url 이 비어 있으면 신청 버튼 대신 준비 중 안내를 보여 줍니다. */
   registration: {
     courseTitle: string;
@@ -264,6 +278,19 @@ export default function CourseLanding(p: CourseLandingProps) {
             <div className="dc-notice" role="note">
               <strong>{p.notice.title}</strong>
               <p>{p.notice.body}</p>
+              {p.notice.items && p.notice.items.length > 0 && (
+                <div className="dc-notice-items">
+                  {p.notice.itemsTitle && <b>{p.notice.itemsTitle}</b>}
+                  <ul>
+                    {p.notice.items.map((it) => (
+                      <li key={it}>{it}</li>
+                    ))}
+                  </ul>
+                  {p.notice.itemsNote && (
+                    <span className="note">{p.notice.itemsNote}</span>
+                  )}
+                </div>
+              )}
             </div>
           )}
           <div className="dc-event">
@@ -272,6 +299,20 @@ export default function CourseLanding(p: CourseLandingProps) {
                 {url ? "이벤터스 행사 페이지" : "신청 준비 중"}
               </span>
               <h3>{p.registration.courseTitle}</h3>
+              {p.price && (
+                <div className="dc-price">
+                  {p.price.badge && (
+                    <span className="dc-price-badge">{p.price.badge}</span>
+                  )}
+                  <span className="dc-price-row">
+                    <s className="old">{p.price.original}</s>
+                    <strong className="new">{p.price.discounted}</strong>
+                  </span>
+                  {p.price.note && (
+                    <span className="dc-price-note">{p.price.note}</span>
+                  )}
+                </div>
+              )}
               <dl className="dc-event-meta">
                 {[...p.registration.details, ...p.registration.extras].map((d) => (
                   <div className="row" key={d.k}>
