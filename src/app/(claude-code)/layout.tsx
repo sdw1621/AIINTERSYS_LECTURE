@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { COURSE, EVENT } from "@/lib/claude-code-course";
 import "../design.css";
+import "../claude-code.css";
 
 /* 「클로드 코드 순한맛」 전용 루트 레이아웃.
    design.css 의 디자인 시스템을 그대로 쓰되, body 의 cc 클래스로

@@ -1,0 +1,284 @@
+/* ==================================================================
+   「클로드 코드 순한맛」 다크 테크 테마
+   design.css 의 구조를 그대로 쓰고, body.cc 범위에서 색과 서체만 바꿉니다.
+   Claude Design 특강(/design)과 메인 사이트는 영향받지 않습니다.
+
+   design.css 는 --dc-ink 를 "글자색"으로도 "반전 패널 배경"으로도 쓰는데,
+   다크 테마에서는 글자색이 밝아지므로 배경으로 쓰던 곳은 따로 지정합니다.
+   ================================================================== */
+
+body.dc.cc {
+  /* 표면 */
+  --dc-cream: #0c0c10;
+  --dc-cream-deep: #1a1a21;
+  --dc-paper: #15151b;
+  /* 글자 (SVG 일러스트의 선 색도 이 값을 따라갑니다) */
+  --dc-ink: #f4f2f0;
+  --dc-ink-soft: #cec9c3;
+  --dc-muted: #8d8781;
+  --dc-line: #282833;
+  /* 강조 — 어두운 배경에서 읽히도록 한 단계 밝게 */
+  --dc-accent: #e8a05c;
+  --dc-accent-deep: #d98a41;
+  --dc-accent-deeper: #f3bc85;
+  --dc-accent-soft: #241c14;
+  /* 강조색 위에 올라가는 글자 */
+  --dc-on-accent: #12100e;
+
+  /* 일러스트: 터미널은 어둡게, 그 위 요소와 외곽선은 밝게 */
+  --dc-art-solid: #1e1e28;
+  --dc-art-on-solid: #e9e5e0;
+  --dc-art-surface: #262632;
+  --dc-art-line: #cfcbc6;
+
+  --dc-radius: 12px;
+  --dc-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+/* ---------- 기술적인 라벨은 고정폭 서체로 ---------- */
+.cc .dc-eyebrow,
+.cc .dc-kicker,
+.cc .dc-summary dt,
+.cc .dc-part .no,
+.cc .dc-part .when,
+.cc .dc-part .head .src,
+.cc .dc-price-badge,
+.cc .dc-flow .step .n,
+.cc .dc-methods .tag {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-feature-settings: "tnum";
+}
+.cc .dc-kicker,
+.cc .dc-eyebrow {
+  letter-spacing: 1.2px;
+}
+
+/* ---------- 헤더 ---------- */
+.cc .dc-header {
+  background: rgba(12, 12, 16, 0.82);
+  border-bottom: 1px solid var(--dc-line);
+}
+.cc .dc-logo .mark {
+  color: var(--dc-on-accent);
+  border-radius: 8px;
+}
+.cc .dc-nav .dc-btn-sm {
+  background: var(--dc-accent);
+  color: var(--dc-on-accent);
+}
+.cc .dc-nav .dc-btn-sm:hover {
+  background: var(--dc-accent-deeper);
+  color: var(--dc-on-accent);
+}
+
+/* ---------- 히어로: 격자 배경으로 터미널 느낌 ---------- */
+.cc .dc-hero {
+  position: relative;
+  background:
+    radial-gradient(760px 420px at 78% 4%, rgba(232, 160, 92, 0.14), transparent 62%),
+    radial-gradient(560px 320px at 2% 96%, rgba(232, 160, 92, 0.07), transparent 60%),
+    var(--dc-cream);
+  border-bottom: 1px solid var(--dc-line);
+}
+.cc .dc-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 78%);
+  pointer-events: none;
+}
+.cc .dc-hero .dc-wrap {
+  position: relative;
+}
+.cc .dc-eyebrow {
+  background: var(--dc-accent-soft);
+  border-color: rgba(232, 160, 92, 0.38);
+  color: var(--dc-accent-deeper);
+}
+
+/* ---------- 버튼 ---------- */
+.cc .dc-btn,
+.cc a.dc-btn {
+  background: var(--dc-accent);
+  color: var(--dc-on-accent);
+  box-shadow: 0 0 0 1px rgba(232, 160, 92, 0.35),
+    0 12px 30px rgba(232, 160, 92, 0.18);
+}
+.cc .dc-btn:hover,
+.cc a.dc-btn:hover {
+  background: var(--dc-accent-deeper);
+  color: var(--dc-on-accent);
+}
+.cc .dc-btn.ghost,
+.cc a.dc-btn.ghost {
+  background: transparent;
+  color: var(--dc-ink);
+  border: 1px solid var(--dc-line);
+  box-shadow: none;
+}
+.cc .dc-btn.ghost:hover,
+.cc a.dc-btn.ghost:hover {
+  background: var(--dc-cream-deep);
+  color: var(--dc-ink);
+  border-color: var(--dc-accent);
+}
+.cc .dc-btn.is-disabled,
+.cc .dc-btn.is-disabled:hover {
+  background: var(--dc-cream-deep);
+  color: var(--dc-muted);
+  box-shadow: inset 0 0 0 1px var(--dc-line);
+}
+
+/* ---------- 핵심 요약 띠 ---------- */
+.cc .dc-summary {
+  background: #101016;
+  border-top: 1px solid var(--dc-line);
+  border-bottom: 1px solid var(--dc-line);
+}
+.cc .dc-summary .cell {
+  border-right-color: var(--dc-line);
+}
+.cc .dc-summary .cell.accent {
+  background: var(--dc-accent);
+  color: var(--dc-on-accent);
+}
+.cc .dc-summary .cell.accent dt,
+.cc .dc-summary .cell.accent dd span {
+  color: rgba(18, 16, 14, 0.72);
+}
+
+/* ---------- 카드 표면 ---------- */
+.cc .dc-part,
+.cc .dc-audience .card,
+.cc .dc-section.paper .dc-audience .card,
+.cc .dc-outputs .item,
+.cc .dc-methods .m,
+.cc .dc-flow .step,
+.cc .dc-event {
+  background: var(--dc-paper);
+  border-color: var(--dc-line);
+}
+.cc .dc-section.paper {
+  background: #101016;
+}
+.cc .dc-part {
+  border-top: 1px solid var(--dc-line);
+}
+.cc .dc-part .no {
+  background: var(--dc-accent);
+  color: var(--dc-on-accent);
+  border-radius: 6px;
+}
+.cc .dc-part .head .src {
+  background: var(--dc-cream-deep);
+  color: var(--dc-ink-soft);
+  border-radius: 6px;
+}
+.cc .dc-methods .tag {
+  background: rgba(232, 160, 92, 0.14);
+  color: var(--dc-accent-deeper);
+  border-radius: 6px;
+}
+.cc .dc-outputs .item strong,
+.cc .dc-audience .card strong {
+  color: var(--dc-ink);
+}
+
+/* ---------- 실습 결과물 강조 블록 ---------- */
+.cc .dc-project {
+  background: #08080b;
+  border: 1px solid var(--dc-line);
+  border-radius: 18px;
+}
+.cc .dc-outputs .item {
+  border-radius: 12px;
+}
+
+/* ---------- 준비물 안내 ---------- */
+.cc .dc-notice {
+  background: var(--dc-accent-soft);
+  border-color: rgba(232, 160, 92, 0.4);
+  border-left-color: var(--dc-accent);
+}
+.cc .dc-notice strong {
+  color: var(--dc-accent-deeper);
+}
+.cc .dc-notice-items {
+  border-top-color: rgba(232, 160, 92, 0.35);
+}
+.cc .dc-notice-items li {
+  background: var(--dc-paper);
+  border-color: var(--dc-line);
+  border-radius: 6px;
+  color: var(--dc-ink);
+}
+
+/* ---------- 수강료 ---------- */
+.cc .dc-price-badge {
+  background: var(--dc-accent);
+  color: var(--dc-on-accent);
+  border-radius: 6px;
+}
+.cc .dc-price-row .new {
+  color: var(--dc-accent-deeper);
+}
+.cc .dc-event-badge {
+  background: var(--dc-accent-soft);
+  border-color: rgba(232, 160, 92, 0.4);
+  color: var(--dc-accent-deeper);
+  border-radius: 6px;
+}
+
+/* ---------- FAQ ---------- */
+.cc .dc-faq,
+.cc .dc-faq details {
+  border-color: var(--dc-line);
+}
+
+/* ---------- 하단 CTA ---------- */
+.cc .dc-cta {
+  background:
+    radial-gradient(620px 300px at 50% 0%, rgba(232, 160, 92, 0.16), transparent 65%),
+    #08080b;
+  border-top: 1px solid var(--dc-line);
+}
+.cc .dc-cta h2 {
+  color: var(--dc-ink);
+}
+.cc .dc-cta p {
+  color: var(--dc-ink-soft);
+}
+.cc .dc-cta .dc-btn,
+.cc .dc-cta a.dc-btn {
+  background: var(--dc-accent);
+  color: var(--dc-on-accent);
+}
+.cc .dc-cta .dc-btn:hover,
+.cc .dc-cta a.dc-btn:hover {
+  background: var(--dc-accent-deeper);
+  color: var(--dc-on-accent);
+}
+
+/* ---------- 푸터 ---------- */
+.cc .dc-footer {
+  background: #08080b;
+  border-top: 1px solid var(--dc-line);
+  color: var(--dc-muted);
+}
+.cc .dc-footer a {
+  color: var(--dc-ink-soft);
+}
+.cc .dc-footer a:hover {
+  color: var(--dc-accent-deeper);
+}
+
+/* ---------- 본문 링크 ---------- */
+.cc a {
+  color: var(--dc-accent-deeper);
+}

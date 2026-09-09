@@ -15,6 +15,13 @@
   --dc-accent-deep: #b8552f;
   --dc-accent-deeper: #9a4526;
   --dc-accent-soft: #fbeee7;
+  /* 일러스트 전용 토큰.
+     --dc-ink 를 "어두운 면"과 "선" 양쪽에 쓰면 다크 테마에서 의미가 뒤집혀
+     터미널이 흰 창이 되어 버립니다. 역할별로 나눠 둡니다. */
+  --dc-art-solid: var(--dc-ink);      /* 터미널 화면처럼 어두운 면 */
+  --dc-art-on-solid: var(--dc-paper); /* 그 위에 올라가는 밝은 요소 */
+  --dc-art-surface: var(--dc-paper);  /* 휴대폰·문서·말풍선 같은 밝은 면 */
+  --dc-art-line: var(--dc-ink);       /* 외곽선 */
   --dc-radius: 16px;
   --dc-shadow: 0 14px 40px rgba(31, 30, 29, 0.09);
   --dc-max: 1080px;

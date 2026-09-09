@@ -6,9 +6,14 @@
 
 const A = "var(--dc-accent)";
 const D = "var(--dc-accent-deep)";
-const INK = "var(--dc-ink)";
-const LINE = "var(--dc-line)";
-const PAPER = "var(--dc-paper)";
+/** 터미널 화면처럼 어두운 면 */
+const SOLID = "var(--dc-art-solid)";
+/** 어두운 면 위에 올라가는 밝은 요소 (눈·체크 등) */
+const ON_SOLID = "var(--dc-art-on-solid)";
+/** 휴대폰·문서·말풍선 같은 밝은 면 */
+const SURFACE = "var(--dc-art-surface)";
+/** 외곽선 */
+const LINE = "var(--dc-art-line)";
 
 type Props = { className?: string };
 
@@ -17,7 +22,7 @@ export function TerminalArt({ className }: Props) {
   return (
     <svg viewBox="0 0 420 320" className={className} role="img"
          aria-label="터미널 창에 대화로 요청하면 결과가 만들어지는 모습">
-      <rect x="24" y="40" width="300" height="200" rx="14" fill={INK} />
+      <rect x="24" y="40" width="300" height="200" rx="14" fill={SOLID} />
       <circle cx="46" cy="60" r="4.5" fill="#ff5f57" />
       <circle cx="62" cy="60" r="4.5" fill="#febc2e" />
       <circle cx="78" cy="60" r="4.5" fill="#28c840" />
@@ -32,9 +37,9 @@ export function TerminalArt({ className }: Props) {
       <rect x="160" y="182" width="7" height="11" fill={A} />
       {/* 사용자 말풍선 */}
       <g>
-        <rect x="196" y="216" width="200" height="72" rx="18" fill={PAPER}
+        <rect x="196" y="216" width="200" height="72" rx="18" fill={SURFACE}
               stroke={A} strokeWidth="2" />
-        <path d="M232 288 l-14 20 l32 -20 z" fill={PAPER} stroke={A} strokeWidth="2" />
+        <path d="M232 288 l-14 20 l32 -20 z" fill={SURFACE} stroke={A} strokeWidth="2" />
         <rect x="216" y="238" width="150" height="8" rx="4" fill={D} opacity=".65" />
         <rect x="216" y="256" width="104" height="8" rx="4" fill={D} opacity=".35" />
       </g>
@@ -48,9 +53,9 @@ export function TerminalArt({ className }: Props) {
 export function LinkTreeArt({ className }: Props) {
   return (
     <svg viewBox="0 0 120 120" className={className} role="img" aria-label="링크 목록 화면">
-      <rect x="34" y="10" width="52" height="100" rx="10" fill={PAPER} stroke={INK} strokeWidth="2.5" />
+      <rect x="34" y="10" width="52" height="100" rx="10" fill={SURFACE} stroke={LINE} strokeWidth="2.5" />
       <circle cx="60" cy="30" r="8" fill={A} />
-      <rect x="44" y="46" width="32" height="6" rx="3" fill={INK} opacity=".7" />
+      <rect x="44" y="46" width="32" height="6" rx="3" fill={LINE} opacity=".7" />
       <rect x="42" y="60" width="36" height="11" rx="5.5" fill={A} />
       <rect x="42" y="76" width="36" height="11" rx="5.5" fill={A} opacity=".6" />
       <rect x="42" y="92" width="36" height="11" rx="5.5" fill={A} opacity=".35" />
@@ -62,11 +67,11 @@ export function LinkTreeArt({ className }: Props) {
 export function AgentsArt({ className }: Props) {
   return (
     <svg viewBox="0 0 120 120" className={className} role="img" aria-label="여러 에이전트에게 작업을 분배하는 모습">
-      <circle cx="60" cy="26" r="14" fill={INK} />
-      <circle cx="55" cy="24" r="2.4" fill={PAPER} />
-      <circle cx="65" cy="24" r="2.4" fill={PAPER} />
+      <circle cx="60" cy="26" r="14" fill={SOLID} />
+      <circle cx="55" cy="24" r="2.4" fill={ON_SOLID} />
+      <circle cx="65" cy="24" r="2.4" fill={ON_SOLID} />
       <path d="M60 40 V60 M26 84 V72 Q26 60 44 60 H76 Q94 60 94 72 V84" fill="none"
-            stroke={LINE} strokeWidth="2.5" />
+            stroke={LINE} strokeWidth="2.5" opacity=".5" />
       <circle cx="26" cy="94" r="12" fill={A} />
       <circle cx="60" cy="94" r="12" fill={A} opacity=".7" />
       <circle cx="94" cy="94" r="12" fill={A} opacity=".45" />
@@ -79,17 +84,17 @@ export function AgentsArt({ className }: Props) {
 export function DocArt({ className }: Props) {
   return (
     <svg viewBox="0 0 120 120" className={className} role="img" aria-label="요구사항 문서와 체크리스트">
-      <rect x="28" y="12" width="64" height="96" rx="8" fill={PAPER} stroke={INK} strokeWidth="2.5" />
-      <rect x="40" y="28" width="30" height="7" rx="3.5" fill={INK} opacity=".75" />
+      <rect x="28" y="12" width="64" height="96" rx="8" fill={SURFACE} stroke={LINE} strokeWidth="2.5" />
+      <rect x="40" y="28" width="30" height="7" rx="3.5" fill={LINE} opacity=".75" />
       {[48, 64, 80].map((y, i) => (
         <g key={y}>
           <rect x="40" y={y} width="11" height="11" rx="3" fill={i === 2 ? "none" : A}
                 stroke={i === 2 ? LINE : "none"} strokeWidth="2" />
           {i !== 2 && (
-            <path d={`M43 ${y + 6} l2.6 2.8 l4.6 -5.4`} fill="none" stroke={PAPER}
+            <path d={`M43 ${y + 6} l2.6 2.8 l4.6 -5.4`} fill="none" stroke={SURFACE}
                   strokeWidth="2" strokeLinecap="round" />
           )}
-          <rect x="57" y={y + 2.5} width="24" height="6" rx="3" fill={INK} opacity=".35" />
+          <rect x="57" y={y + 2.5} width="24" height="6" rx="3" fill={LINE} opacity=".35" />
         </g>
       ))}
     </svg>
@@ -101,10 +106,10 @@ export function ShortsArt({ className }: Props) {
   return (
     <svg viewBox="0 0 120 120" className={className} role="img" aria-label="숏폼 영상이 자동으로 이어지는 파이프라인">
       <rect x="14" y="34" width="30" height="52" rx="6" fill={A} opacity=".35" />
-      <rect x="46" y="26" width="34" height="68" rx="7" fill={PAPER} stroke={INK} strokeWidth="2.5" />
+      <rect x="46" y="26" width="34" height="68" rx="7" fill={SURFACE} stroke={LINE} strokeWidth="2.5" />
       <path d="M58 48 l16 12 l-16 12 z" fill={A} />
       <rect x="82" y="34" width="30" height="52" rx="6" fill={A} opacity=".35" />
-      <path d="M44 60 H46 M80 60 H82" stroke={INK} strokeWidth="2.5" />
+      <path d="M44 60 H46 M80 60 H82" stroke={LINE} strokeWidth="2.5" />
       <circle cx="63" cy="104" r="3" fill={A} />
       <circle cx="75" cy="104" r="3" fill={A} opacity=".5" />
       <circle cx="51" cy="104" r="3" fill={A} opacity=".5" />
@@ -116,14 +121,14 @@ export function ShortsArt({ className }: Props) {
 export function BotArt({ className }: Props) {
   return (
     <svg viewBox="0 0 120 120" className={className} role="img" aria-label="대화로 일을 시키는 AI 비서">
-      <rect x="16" y="24" width="88" height="62" rx="12" fill={PAPER} stroke={INK} strokeWidth="2.5" />
-      <path d="M40 86 l-6 16 l20 -16 z" fill={PAPER} stroke={INK} strokeWidth="2.5" />
-      <rect x="30" y="40" width="40" height="8" rx="4" fill={INK} opacity=".3" />
+      <rect x="16" y="24" width="88" height="62" rx="12" fill={SURFACE} stroke={LINE} strokeWidth="2.5" />
+      <path d="M40 86 l-6 16 l20 -16 z" fill={SURFACE} stroke={LINE} strokeWidth="2.5" />
+      <rect x="30" y="40" width="40" height="8" rx="4" fill={LINE} opacity=".3" />
       <rect x="30" y="56" width="58" height="8" rx="4" fill={A} />
       <circle cx="88" cy="34" r="12" fill={A} />
-      <circle cx="84" cy="33" r="2" fill={PAPER} />
-      <circle cx="92" cy="33" r="2" fill={PAPER} />
-      <path d="M84 39 q4 3 8 0" fill="none" stroke={PAPER} strokeWidth="2" strokeLinecap="round" />
+      <circle cx="84" cy="33" r="2" fill={ON_SOLID} />
+      <circle cx="92" cy="33" r="2" fill={ON_SOLID} />
+      <path d="M84 39 q4 3 8 0" fill="none" stroke={ON_SOLID} strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -136,8 +141,8 @@ export function LoopArt({ className }: Props) {
             strokeLinecap="round" />
       <path d="M26 22 v16 h16" fill="none" stroke={A} strokeWidth="7"
             strokeLinecap="round" strokeLinejoin="round" />
-      <rect x="46" y="46" width="28" height="28" rx="8" fill={INK} />
-      <path d="M54 60 l4 4 l8 -9" fill="none" stroke={PAPER} strokeWidth="2.6"
+      <rect x="46" y="46" width="28" height="28" rx="8" fill={SOLID} />
+      <path d="M54 60 l4 4 l8 -9" fill="none" stroke={ON_SOLID} strokeWidth="2.6"
             strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
