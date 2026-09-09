@@ -1,8 +1,26 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono, IBM_Plex_Sans_KR } from "next/font/google";
 import Link from "next/link";
 import { COURSE, EVENT } from "@/lib/claude-code-course";
 import "../design.css";
 import "../claude-code.css";
+
+/* 기술 제품용으로 설계된 IBM Plex 계열.
+   next/font 가 빌드 시점에 내려받아 자체 호스팅하므로 방문자 브라우저가
+   외부 폰트 서버를 거치지 않고, 폰트 교체로 인한 레이아웃 흔들림도 없습니다. */
+const plexSans = IBM_Plex_Sans_KR({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cc-sans",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-cc-mono",
+  display: "swap",
+});
 
 /* 「클로드 코드 순한맛」 전용 루트 레이아웃.
    design.css 의 디자인 시스템을 그대로 쓰되, body 의 cc 클래스로
@@ -25,7 +43,7 @@ export default function ClaudeCodeSiteLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="dc cc">
+      <body className={`dc cc ${plexSans.variable} ${plexMono.variable}`}>
         <header className="dc-header">
           <div className="dc-wrap inner">
             <Link href="/claude-code" className="dc-logo">

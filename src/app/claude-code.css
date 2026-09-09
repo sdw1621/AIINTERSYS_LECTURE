@@ -31,6 +31,11 @@ body.dc.cc {
   --dc-art-surface: #262632;
   --dc-art-line: #cfcbc6;
 
+  /* IBM Plex Sans KR 은 700 이 가장 굵어, 기존 800 지정은 700 으로 낮춥니다. */
+  font-family: var(--font-cc-sans), "Pretendard", -apple-system,
+    BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  letter-spacing: -0.1px;
+
   --dc-radius: 12px;
   --dc-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
   color-scheme: dark;
@@ -45,10 +50,53 @@ body.dc.cc {
 .cc .dc-part .head .src,
 .cc .dc-price-badge,
 .cc .dc-flow .step .n,
-.cc .dc-methods .tag {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+.cc .dc-methods .tag,
+.cc .dc-price-row .old,
+.cc .dc-event-badge {
+  font-family: var(--font-cc-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
   font-feature-settings: "tnum";
+}
+
+/* 가장 굵은 자소가 700 이므로 800 지정을 내려 잡고,
+   굵기가 줄어든 만큼 자간을 조여 밀도를 유지합니다. */
+.cc h1,
+.cc h2,
+.cc h3,
+.cc strong,
+.cc b,
+.cc .dc-btn,
+.cc a.dc-btn,
+.cc .dc-nav .dc-btn-sm,
+.cc .dc-summary dd b,
+.cc .dc-price-row .new,
+.cc .dc-faq summary,
+.cc .dc-logo .name b {
+  font-weight: 700;
+}
+.cc h1 {
+  letter-spacing: -1.8px;
+}
+.cc h2,
+.cc .dc-price-row .new {
+  letter-spacing: -0.9px;
+}
+.cc .dc-nav a {
+  font-weight: 500;
+}
+/* IBM Plex Mono 는 600 까지만 불러오므로, 800 지정 라벨을 600 으로 맞춥니다.
+   지정 굵기가 없으면 브라우저가 합성 볼드를 만들어 자소가 뭉개집니다. */
+.cc .dc-eyebrow,
+.cc .dc-kicker,
+.cc .dc-summary dt,
+.cc .dc-part .no,
+.cc .dc-part .when,
+.cc .dc-part .head .src,
+.cc .dc-price-badge,
+.cc .dc-flow .step .n,
+.cc .dc-methods .tag,
+.cc .dc-event-badge {
+  font-weight: 600;
 }
 .cc .dc-kicker,
 .cc .dc-eyebrow {
