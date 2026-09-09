@@ -49,6 +49,31 @@ export function eventDetails(): { k: string; v: string }[] {
   ].filter((d) => d.v.length > 0);
 }
 
+/* ------------------------------------------------------------------ *
+ * 이미지.
+ * Higgsfield 로 생성해 CDN 에 올라간 파일을 참조합니다.
+ * 이 세션 환경에서는 CDN 다운로드가 막혀 저장소에 담지 못했습니다.
+ * 나중에 파일을 받아 public/img/ 에 넣으면 아래 경로만 바꾸면 됩니다.
+ * ------------------------------------------------------------------ */
+
+const CDN =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_3GIaFWox9azwchjqbo5upPN5DLz";
+
+/** 히어로 우측 비주얼 — 떠 있는 터미널 창과 연결된 패널들 */
+export const HERO_IMAGE = {
+  src: `${CDN}/hf_20260909_063224_103fd215-ee92-44d8-87be-88cc1de84f1f.png`,
+  alt: "어두운 배경에 떠 있는 터미널 창과, 거기서 뻗어 나온 빛줄기로 연결된 화면·영상·대화창 패널들",
+  width: 2752,
+  height: 1536,
+} as const;
+
+/** 링크 공유 시 표시되는 썸네일 */
+export const OG_IMAGE = {
+  src: `${CDN}/hf_20260909_063224_945d70e6-7726-4c8f-a3c6-3c91711138d3.png`,
+  width: 2752,
+  height: 1536,
+} as const;
+
 /** 신청 전 반드시 확인해야 하는 조건. 신청 안내 영역 상단에 표시됩니다. */
 export const NOTICE = {
   title: "Claude Pro 플랜($22/월) 이상 유료 구독이 필요합니다",

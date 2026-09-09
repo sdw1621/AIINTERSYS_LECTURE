@@ -29,8 +29,8 @@ export type CourseLandingProps = {
   eyebrow: string;
   headline: { before: string; accent: string; after: string };
   intro: string;
-  /** 히어로 우측 일러스트 표시 여부 */
-  heroArt?: boolean;
+  /** 히어로 우측 비주얼. 없으면 기본 SVG 일러스트를 씁니다. */
+  heroImage?: { src: string; alt: string; width: number; height: number };
   price?: { original: string; discounted: string; badge?: string; note?: string };
   /** 결정에 필요한 핵심 정보. 히어로 바로 아래 띠로 표시됩니다. */
   summary: readonly Summary[];
@@ -104,11 +104,22 @@ export default function CourseLanding(p: CourseLandingProps) {
               </Link>
             </div>
           </div>
-          {p.heroArt !== false && (
-            <div className="dc-hero-art" aria-hidden="false">
+          <div className="dc-hero-art">
+            {p.heroImage ? (
+              /* 외부 CDN 이미지라 next/image 대신 img 를 씁니다.
+                 width·height 를 지정해 로딩 중 레이아웃이 밀리지 않게 합니다. */
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={p.heroImage.src}
+                alt={p.heroImage.alt}
+                width={p.heroImage.width}
+                height={p.heroImage.height}
+                fetchPriority="high"
+              />
+            ) : (
               <TerminalArt />
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 

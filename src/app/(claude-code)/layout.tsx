@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans_KR } from "next/font/google";
 import Link from "next/link";
-import { COURSE, EVENT } from "@/lib/claude-code-course";
+import { COURSE, EVENT, OG_IMAGE } from "@/lib/claude-code-course";
 import "../design.css";
 import "../claude-code.css";
 
@@ -33,6 +33,20 @@ export const metadata: Metadata = {
     title: COURSE.title,
     description: COURSE.description,
     type: "website",
+    images: [
+      {
+        url: OG_IMAGE.src,
+        width: OG_IMAGE.width,
+        height: OG_IMAGE.height,
+        alt: COURSE.title,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: COURSE.title,
+    description: COURSE.description,
+    images: [OG_IMAGE.src],
   },
 };
 

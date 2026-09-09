@@ -44,6 +44,11 @@ body.dc {
   color: var(--dc-ink);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* 한국어는 기본 규칙으로 단어 한가운데서 줄이 끊깁니다
+     ("만들 수 있도 / 록"). keep-all 로 어절 단위로만 넘기고,
+     끊을 곳이 없는 긴 문자열만 예외적으로 강제 분리합니다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }

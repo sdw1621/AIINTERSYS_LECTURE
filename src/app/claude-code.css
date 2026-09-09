@@ -330,3 +330,14 @@ body.dc.cc {
 .cc a {
   color: var(--dc-accent-deeper);
 }
+
+/* ---------- 히어로 비주얼 (생성 이미지) ---------- */
+.cc .dc-hero-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--dc-line);
+  /* 이미지 가장자리를 배경에 녹여 잘린 사각형처럼 보이지 않게 합니다. */
+  mask-image: radial-gradient(115% 115% at 50% 45%, #000 58%, transparent 96%);
+}

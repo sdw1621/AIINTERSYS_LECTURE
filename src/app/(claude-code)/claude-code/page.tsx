@@ -5,6 +5,7 @@ import {
   EVENT,
   FAQ,
   FLOW,
+  HERO_IMAGE,
   NOTICE,
   OUTPUTS,
   PARTS,
@@ -18,6 +19,7 @@ export default function ClaudeCodeLandingPage() {
       eyebrow={`2주 6회 · 총 12시간 · ${COURSE.capacity}`}
       headline={{ before: "코드를 몰라도,", accent: "딸깍", after: " 만듭니다." }}
       intro={COURSE.description}
+      heroImage={HERO_IMAGE}
       price={PRICE}
       summary={SUMMARY}
       curriculum={{
