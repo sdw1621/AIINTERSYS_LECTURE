@@ -40,8 +40,11 @@ export default function ClaudeCodeSiteLayout({
               <Link href="/claude-code#curriculum" className="hide-sm">
                 커리큘럼
               </Link>
-              <Link href="/claude-code#timeline" className="hide-sm">
-                시간표
+              <Link href="/claude-code#outputs" className="hide-sm">
+                결과물
+              </Link>
+              <Link href="/claude-code#prepare" className="hide-sm">
+                준비물
               </Link>
               <Link href="/claude-code#faq" className="hide-sm">
                 FAQ

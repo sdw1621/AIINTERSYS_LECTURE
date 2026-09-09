@@ -1,67 +1,57 @@
 import Link from "next/link";
+import CourseArt, { TerminalArt, type ArtKey } from "./CourseArt";
 
 /* ------------------------------------------------------------------ *
  * 과정 랜딩 페이지 공용 컴포넌트.
- * 콘텐츠 모듈(lib/*-course.ts)의 값을 받아 화면을 구성합니다.
- * 마크업을 한 곳에 모아 두어 과정이 늘어도 사본이 생기지 않게 합니다.
+ *
+ * 섹션 순서는 "결정에 필요한 정보부터" 원칙으로 배치했습니다.
+ *   히어로 → 핵심 요약 → 커리큘럼(일정 포함) → 결과물
+ *   → 교육 대상 → 진행 방식·기대 효과 → 준비물 → FAQ → 신청
+ * 회차 일정은 커리큘럼 카드에 함께 표시하므로 별도 시간표 섹션이 없습니다.
  * ------------------------------------------------------------------ */
 
 type Fact = { k: string; v: string };
+type Summary = { k: string; v: string; sub?: string; accent?: boolean };
 type Card = { icon: string; title: string; text: string };
-type Part = { no: string; title: string; summary: string; items: readonly string[] };
+type Part = {
+  no: string;
+  when: string;
+  source: string;
+  title: string;
+  summary: string;
+  items: readonly string[];
+};
 type Step = { no: number; title: string; desc: string };
-type Slot = { time: string; label: string; detail: string };
-type Output = { icon: string; name: string };
+type Output = { art: string; name: string; desc: string };
 type Qa = { q: string; a: string };
 
 export type CourseLandingProps = {
   eyebrow: string;
-  /** 히어로 제목. 강조할 부분은 accent 로 분리해 넘깁니다. */
   headline: { before: string; accent: string; after: string };
   intro: string;
-  facts: readonly Fact[];
-  overview: { heading: string; body: string; flow: readonly Step[] };
-  audience: { heading: string; body: string; cards: readonly Card[] };
-  goals: { heading: string; items: readonly string[] };
+  /** 히어로 우측 일러스트 표시 여부 */
+  heroArt?: boolean;
+  price?: { original: string; discounted: string; badge?: string; note?: string };
+  /** 결정에 필요한 핵심 정보. 히어로 바로 아래 띠로 표시됩니다. */
+  summary: readonly Summary[];
   curriculum: { heading: string; body: string; parts: readonly Part[] };
   project: { heading: string; body: string; outputs: readonly Output[] };
-  method: { heading: string; body: string };
+  audience: { heading: string; body: string; cards: readonly Card[] };
+  method: { heading: string; body: string; flow: readonly Step[] };
   outcome: { heading: string; body: React.ReactNode };
-  timeline: { heading: string; body: string; slots: readonly Slot[] };
-  faq: { heading: string; items: readonly Qa[] };
-  /** 신청 전 반드시 확인해야 하는 조건. 신청 안내 영역 맨 위에 강조해 표시합니다. */
   notice?: {
     title: string;
     body: string;
-    /** 준비·설치 항목 (선택) */
     itemsTitle?: string;
     items?: readonly string[];
     itemsNote?: string;
   };
-  /** 수강료. 정가와 할인가를 함께 보여 줍니다. */
-  price?: {
-    original: string;
-    discounted: string;
-    badge?: string;
-    note?: string;
-  };
-  /** 신청 정보. url 이 비어 있으면 신청 버튼 대신 준비 중 안내를 보여 줍니다. */
-  registration: {
-    courseTitle: string;
-    url: string;
-    details: readonly Fact[];
-    extras: readonly Fact[];
-  };
+  faq: { heading: string; items: readonly Qa[] };
+  registration: { courseTitle: string; url: string; details: readonly Fact[] };
   cta: { heading: string; body: string };
 };
 
-function ApplyButton({
-  url,
-  className = "dc-btn",
-}: {
-  url: string;
-  className?: string;
-}) {
+function ApplyButton({ url, className = "dc-btn" }: { url: string; className?: string }) {
   if (!url) {
     return (
       <span className={`${className} is-disabled`} aria-disabled="true">
@@ -76,56 +66,120 @@ function ApplyButton({
   );
 }
 
+function Price({ price }: { price: NonNullable<CourseLandingProps["price"]> }) {
+  return (
+    <div className="dc-price">
+      {price.badge && <span className="dc-price-badge">{price.badge}</span>}
+      <span className="dc-price-row">
+        <s className="old">{price.original}</s>
+        <strong className="new">{price.discounted}</strong>
+      </span>
+      {price.note && <span className="dc-price-note">{price.note}</span>}
+    </div>
+  );
+}
+
 export default function CourseLanding(p: CourseLandingProps) {
   const { url } = p.registration;
 
   return (
     <main>
+      {/* ── 히어로: 무엇을 배우고 얼마인지 한 화면에 ── */}
       <section className="dc-hero">
-        <div className="dc-wrap">
-          <span className="dc-eyebrow">{p.eyebrow}</span>
-          <h1>
-            {p.headline.before}
-            <br />
-            <em>{p.headline.accent}</em>
-            {p.headline.after}
-          </h1>
-          <p className="sub">{p.intro}</p>
-          <div className="actions">
-            <ApplyButton url={url} />
-            <Link href="#curriculum" className="dc-btn ghost">
-              커리큘럼 보기
-            </Link>
+        <div className="dc-wrap dc-hero-grid">
+          <div className="dc-hero-copy">
+            <span className="dc-eyebrow">{p.eyebrow}</span>
+            <h1>
+              {p.headline.before}
+              <br />
+              <em>{p.headline.accent}</em>
+              {p.headline.after}
+            </h1>
+            <p className="sub">{p.intro}</p>
+            {p.price && <Price price={p.price} />}
+            <div className="actions">
+              <ApplyButton url={url} />
+              <Link href="#curriculum" className="dc-btn ghost">
+                커리큘럼 보기
+              </Link>
+            </div>
           </div>
-          <div className="dc-facts">
-            {p.facts.map((f) => (
-              <div className="fact" key={f.k}>
-                <span className="k">{f.k}</span>
-                <span className="v">{f.v}</span>
+          {p.heroArt !== false && (
+            <div className="dc-hero-art" aria-hidden="false">
+              <TerminalArt />
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── 핵심 요약 띠 ── */}
+      <section className="dc-summary" aria-label="과정 핵심 정보">
+        <div className="dc-wrap">
+          <dl>
+            {p.summary.map((s) => (
+              <div className={`cell${s.accent ? " accent" : ""}`} key={s.k}>
+                <dt>{s.k}</dt>
+                <dd>
+                  <b>{s.v}</b>
+                  {s.sub && <span>{s.sub}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      {/* ── 커리큘럼 (회차 일정 포함) ── */}
+      <section className="dc-section paper" id="curriculum">
+        <div className="dc-wrap">
+          <p className="dc-kicker">Curriculum</p>
+          <h2>{p.curriculum.heading}</h2>
+          <p className="desc">{p.curriculum.body}</p>
+          <div className="dc-parts">
+            {p.curriculum.parts.map((part) => (
+              <article className="dc-part" key={part.no}>
+                <div className="head">
+                  <div className="head-top">
+                    <span className="no">{part.no}</span>
+                    <span className="src">{part.source}</span>
+                  </div>
+                  <span className="when">{part.when}</span>
+                  <h3>{part.title}</h3>
+                  <p>{part.summary}</p>
+                </div>
+                <ul>
+                  {part.items.map((it) => (
+                    <li key={it}>{it}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 만들어 가는 결과물 ── */}
+      <section className="dc-section" id="outputs">
+        <div className="dc-wrap">
+          <p className="dc-kicker">What You Build</p>
+          <h2>{p.project.heading}</h2>
+          <p className="desc">{p.project.body}</p>
+          <div className="dc-outputs">
+            {p.project.outputs.map((o) => (
+              <div className="item" key={o.name}>
+                <div className="art">
+                  <CourseArt name={o.art as ArtKey} />
+                </div>
+                <strong>{o.name}</strong>
+                <p>{o.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="dc-section paper" id="overview">
-        <div className="dc-wrap">
-          <p className="dc-kicker">Overview</p>
-          <h2>{p.overview.heading}</h2>
-          <p className="desc">{p.overview.body}</p>
-          <div className="dc-flow">
-            {p.overview.flow.map((s) => (
-              <div className="step" key={s.no}>
-                <span className="n">STEP {s.no}</span>
-                <strong>{s.title}</strong>
-                <p>{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="dc-section" id="audience">
+      {/* ── 교육 대상 ── */}
+      <section className="dc-section paper" id="audience">
         <div className="dc-wrap">
           <p className="dc-kicker">Who</p>
           <h2>{p.audience.heading}</h2>
@@ -144,113 +198,56 @@ export default function CourseLanding(p: CourseLandingProps) {
         </div>
       </section>
 
-      <section className="dc-section paper" id="goals">
-        <div className="dc-wrap">
-          <p className="dc-kicker">Goals</p>
-          <h2>{p.goals.heading}</h2>
-          <ul className="dc-goals">
-            {p.goals.items.map((g, i) => (
-              <li key={g}>
-                <span className="idx">{String(i + 1).padStart(2, "0")}</span>
-                <span>{g}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="dc-section" id="curriculum">
-        <div className="dc-wrap">
-          <p className="dc-kicker">Curriculum</p>
-          <h2>{p.curriculum.heading}</h2>
-          <p className="desc">{p.curriculum.body}</p>
-          <div className="dc-parts">
-            {p.curriculum.parts.map((part) => (
-              <article className="dc-part" key={part.no}>
-                <div className="head">
-                  <span className="no">{part.no}</span>
-                  <h3>{part.title}</h3>
-                  <p>{part.summary}</p>
-                </div>
-                <ul>
-                  {part.items.map((it) => (
-                    <li key={it}>{it}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="dc-section paper" id="project">
-        <div className="dc-wrap">
-          <div className="dc-project">
-            <p className="dc-kicker">Hands-on Project</p>
-            <h2>{p.project.heading}</h2>
-            <p>{p.project.body}</p>
-            <div className="dc-outputs">
-              {p.project.outputs.map((o) => (
-                <div className="item" key={o.name}>
-                  <span aria-hidden="true">{o.icon}</span>
-                  {o.name}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
+      {/* ── 진행 방식 + 기대 효과 ── */}
       <section className="dc-section" id="method">
         <div className="dc-wrap">
           <p className="dc-kicker">How</p>
           <h2>{p.method.heading}</h2>
           <p className="desc">{p.method.body}</p>
-          <div className="dc-methods">
-            <div className="m">
-              <span className="tag">이론</span>
-              <p>필요한 개념만 짧고 분명하게 정리합니다.</p>
-            </div>
-            <div className="m">
-              <span className="tag">시연</span>
-              <p>강사가 실제로 하는 과정을 화면으로 보여 줍니다.</p>
-            </div>
-            <div className="m">
-              <span className="tag">단계별 실습</span>
-              <p>같은 흐름을 따라 각자 자기 결과물을 만들어 갑니다.</p>
-            </div>
+          <div className="dc-flow">
+            {p.method.flow.map((s) => (
+              <div className="step" key={s.no}>
+                <span className="n">STEP {s.no}</span>
+                <strong>{s.title}</strong>
+                <p>{s.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="dc-outcome">
+            <p className="dc-kicker">Outcome</p>
+            <h3>{p.outcome.heading}</h3>
+            <p className="dc-effect">{p.outcome.body}</p>
           </div>
         </div>
       </section>
 
-      <section className="dc-section paper" id="effect">
-        <div className="dc-wrap">
-          <p className="dc-kicker">Outcome</p>
-          <h2>{p.outcome.heading}</h2>
-          <p className="dc-effect">{p.outcome.body}</p>
-        </div>
-      </section>
-
-      <section className="dc-section" id="timeline">
-        <div className="dc-wrap">
-          <p className="dc-kicker">Timetable</p>
-          <h2>{p.timeline.heading}</h2>
-          <p className="desc">{p.timeline.body}</p>
-          <ol className="dc-timeline">
-            {p.timeline.slots.map((t) => (
-              <li key={t.time}>
-                <span className="time">{t.time}</span>
-                <div>
-                  <strong>{t.label}</strong>
-                  <p>{t.detail}</p>
+      {/* ── 준비물·필수 조건 ── */}
+      {p.notice && (
+        <section className="dc-section paper" id="prepare">
+          <div className="dc-wrap">
+            <p className="dc-kicker">Prepare</p>
+            <h2>수강 전 준비할 것</h2>
+            <div className="dc-notice" role="note">
+              <strong>{p.notice.title}</strong>
+              <p>{p.notice.body}</p>
+              {p.notice.items && p.notice.items.length > 0 && (
+                <div className="dc-notice-items">
+                  {p.notice.itemsTitle && <b>{p.notice.itemsTitle}</b>}
+                  <ul>
+                    {p.notice.items.map((it) => (
+                      <li key={it}>{it}</li>
+                    ))}
+                  </ul>
+                  {p.notice.itemsNote && <span className="note">{p.notice.itemsNote}</span>}
                 </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
-      <section className="dc-section paper" id="faq">
+      {/* ── FAQ ── */}
+      <section className="dc-section" id="faq">
         <div className="dc-wrap">
           <p className="dc-kicker">FAQ</p>
           <h2>{p.faq.heading}</h2>
@@ -265,56 +262,25 @@ export default function CourseLanding(p: CourseLandingProps) {
         </div>
       </section>
 
-      <section className="dc-section" id="apply">
+      {/* ── 신청 ── */}
+      <section className="dc-section paper" id="apply">
         <div className="dc-wrap">
           <p className="dc-kicker">Registration</p>
           <h2>신청 안내</h2>
           <p className="desc">
             {url
-              ? "신청 접수와 결제, 일정 안내는 모두 이벤터스 행사 페이지에서 진행됩니다. 아래 버튼을 눌러 행사 페이지에서 신청해 주세요."
-              : "행사 페이지가 열리는 대로 이 자리에 신청 버튼이 표시됩니다. 일정과 참가비도 함께 안내드리겠습니다."}
+              ? "신청 접수와 결제, 일정 안내는 모두 이벤터스 행사 페이지에서 진행됩니다."
+              : "행사 페이지가 열리는 대로 이 자리에 신청 버튼이 표시됩니다."}
           </p>
-          {p.notice && (
-            <div className="dc-notice" role="note">
-              <strong>{p.notice.title}</strong>
-              <p>{p.notice.body}</p>
-              {p.notice.items && p.notice.items.length > 0 && (
-                <div className="dc-notice-items">
-                  {p.notice.itemsTitle && <b>{p.notice.itemsTitle}</b>}
-                  <ul>
-                    {p.notice.items.map((it) => (
-                      <li key={it}>{it}</li>
-                    ))}
-                  </ul>
-                  {p.notice.itemsNote && (
-                    <span className="note">{p.notice.itemsNote}</span>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
           <div className="dc-event">
             <div className="dc-event-body">
               <span className="dc-event-badge">
                 {url ? "이벤터스 행사 페이지" : "신청 준비 중"}
               </span>
               <h3>{p.registration.courseTitle}</h3>
-              {p.price && (
-                <div className="dc-price">
-                  {p.price.badge && (
-                    <span className="dc-price-badge">{p.price.badge}</span>
-                  )}
-                  <span className="dc-price-row">
-                    <s className="old">{p.price.original}</s>
-                    <strong className="new">{p.price.discounted}</strong>
-                  </span>
-                  {p.price.note && (
-                    <span className="dc-price-note">{p.price.note}</span>
-                  )}
-                </div>
-              )}
+              {p.price && <Price price={p.price} />}
               <dl className="dc-event-meta">
-                {[...p.registration.details, ...p.registration.extras].map((d) => (
+                {p.registration.details.map((d) => (
                   <div className="row" key={d.k}>
                     <dt>{d.k}</dt>
                     <dd>{d.v}</dd>
@@ -336,11 +302,6 @@ export default function CourseLanding(p: CourseLandingProps) {
           <h2>{p.cta.heading}</h2>
           <p>{p.cta.body}</p>
           <ApplyButton url={url} />
-          {url && (
-            <p className="dc-cta-note">
-              신청 접수는 이벤터스 행사 페이지에서 진행됩니다.
-            </p>
-          )}
         </div>
       </section>
     </main>

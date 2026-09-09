@@ -916,3 +916,213 @@ body.dc.cc .dc-part ul li::before {
   color: var(--dc-muted);
   transform: none;
 }
+
+/* ==================================================================
+   과정 랜딩 — 정보 우선순위 배치용 레이아웃
+   ================================================================== */
+
+/* ---------- 히어로 2단 ---------- */
+.dc-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 48px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .dc-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .dc-hero-art {
+    order: -1;
+    /* 제목이 너무 아래로 밀리지 않게 모바일에서는 작게 */
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+.dc-hero-copy h1 {
+  max-width: none;
+}
+.dc-hero-copy .sub {
+  max-width: 46ch;
+}
+.dc-hero-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 히어로 안의 수강료는 간격만 조정 */
+.dc-hero .dc-price {
+  margin: 26px 0 0;
+  padding: 0;
+  border-bottom: none;
+}
+.dc-hero .actions {
+  margin-top: 26px;
+}
+
+/* ---------- 핵심 요약 띠 ---------- */
+.dc-summary {
+  background: var(--dc-ink);
+  color: #fff;
+  padding: 0;
+  border-bottom: 1px solid var(--dc-line);
+}
+.dc-summary dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.dc-summary .cell {
+  padding: 22px 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.dc-summary .cell:last-child {
+  border-right: none;
+}
+.dc-summary dt {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.58);
+}
+.dc-summary dd {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.dc-summary dd b {
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  line-height: 1.35;
+}
+.dc-summary dd span {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.62);
+}
+.dc-summary .cell.accent {
+  background: var(--dc-accent-deep);
+}
+.dc-summary .cell.accent dt,
+.dc-summary .cell.accent dd span {
+  color: rgba(255, 255, 255, 0.82);
+}
+@media (max-width: 1020px) {
+  .dc-summary dl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dc-summary .cell:nth-child(3n) {
+    border-right: none;
+  }
+  .dc-summary .cell:nth-child(-n + 3) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+}
+@media (max-width: 600px) {
+  .dc-summary dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dc-summary .cell {
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 16px 14px;
+  }
+  .dc-summary .cell:nth-child(2n) {
+    border-right: none;
+  }
+}
+
+/* ---------- 커리큘럼 카드에 회차 일정 표시 ---------- */
+.dc-part .head-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dc-part .head .src {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--dc-ink-soft);
+  background: var(--dc-cream-deep);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.dc-part .head .when {
+  display: block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dc-accent-deeper, var(--dc-accent-deep));
+}
+.dc-part .head h3 {
+  margin: 6px 0 6px;
+}
+
+/* ---------- 결과물 카드 (일러스트) ---------- */
+.dc-outputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.dc-outputs .item {
+  background: var(--dc-paper);
+  border: 1px solid var(--dc-line);
+  border-radius: var(--dc-radius);
+  padding: 22px 20px 24px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dc-outputs .item .art {
+  width: 84px;
+  height: 84px;
+  margin-bottom: 8px;
+}
+.dc-outputs .item .art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.dc-outputs .item strong {
+  font-size: 16.5px;
+  letter-spacing: -0.3px;
+}
+.dc-outputs .item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--dc-muted);
+  line-height: 1.6;
+}
+@media (max-width: 860px) {
+  .dc-outputs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 520px) {
+  .dc-outputs {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- 진행 방식 안의 기대 효과 ---------- */
+.dc-outcome {
+  margin-top: 40px;
+  padding-top: 34px;
+  border-top: 1px solid var(--dc-line);
+}
+.dc-outcome h3 {
+  font-size: clamp(20px, 2.8vw, 26px);
+  letter-spacing: -0.6px;
+  margin: 0 0 14px;
+}
+.dc-outcome .dc-effect {
+  max-width: 46ch;
+}
