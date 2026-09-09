@@ -777,3 +777,42 @@ body.dc {
 .dc-footer a:hover {
   color: var(--dc-accent);
 }
+
+/* ==================================================================
+   과정별 강조색 변형
+   같은 레이아웃·컴포넌트를 쓰되 body 클래스로 강조색만 교체합니다.
+   ================================================================== */
+
+/* 클로드 코드 순한맛 — 앰버 계열 */
+body.dc.cc {
+  --dc-accent: #c98a3c;
+  --dc-accent-deep: #9a6520;
+  --dc-accent-deeper: #7d5119;
+  --dc-accent-soft: #fbf1e2;
+}
+
+/* 앰버는 코랄보다 밝아 작은 글자에서 대비가 떨어집니다.
+   배지·키커·타임라인 시각처럼 작은 텍스트는 더 진한 톤을 씁니다. */
+body.dc.cc .dc-kicker,
+body.dc.cc .dc-eyebrow,
+body.dc.cc .dc-timeline .time,
+body.dc.cc .dc-part ul li::before {
+  color: var(--dc-accent-deeper);
+}
+body.dc.cc .dc-part ul li::before {
+  background: var(--dc-accent-deeper);
+}
+
+/* 신청 페이지가 아직 없을 때의 버튼 자리 표시 */
+.dc-btn.is-disabled,
+.dc .dc-btn.is-disabled {
+  background: var(--dc-line);
+  color: var(--dc-muted);
+  box-shadow: none;
+  cursor: default;
+}
+.dc-btn.is-disabled:hover {
+  background: var(--dc-line);
+  color: var(--dc-muted);
+  transform: none;
+}
