@@ -8,6 +8,7 @@ import {
   HERO_IMAGE,
   NOTICE,
   OUTPUTS,
+  PREPARE_IMAGE,
   PARTS,
   PRICE,
   SUMMARY,
@@ -60,7 +61,7 @@ export default function ClaudeCodeLandingPage() {
           </>
         ),
       }}
-      notice={NOTICE}
+      notice={{ ...NOTICE, image: PREPARE_IMAGE }}
       faq={{ heading: "자주 묻는 질문", items: FAQ }}
       registration={{
         courseTitle: `${COURSE.title} — ${COURSE.subtitle}`,

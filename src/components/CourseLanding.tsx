@@ -45,6 +45,8 @@ export type CourseLandingProps = {
     itemsTitle?: string;
     items?: readonly string[];
     itemsNote?: string;
+    /** 안내 옆에 함께 보여 줄 이미지 (선택) */
+    image?: { src: string; alt: string; width: number; height: number };
   };
   faq: { heading: string; items: readonly Qa[] };
   registration: { courseTitle: string; url: string; details: readonly Fact[] };
@@ -238,7 +240,8 @@ export default function CourseLanding(p: CourseLandingProps) {
           <div className="dc-wrap">
             <p className="dc-kicker">Prepare</p>
             <h2>수강 전 준비할 것</h2>
-            <div className="dc-notice" role="note">
+            <div className="dc-prepare-grid">
+              <div className="dc-notice" role="note">
               <strong>{p.notice.title}</strong>
               <p>{p.notice.body}</p>
               {p.notice.items && p.notice.items.length > 0 && (
@@ -250,6 +253,19 @@ export default function CourseLanding(p: CourseLandingProps) {
                     ))}
                   </ul>
                   {p.notice.itemsNote && <span className="note">{p.notice.itemsNote}</span>}
+                  </div>
+                )}
+              </div>
+              {p.notice.image && (
+                <div className="dc-prepare-art">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.notice.image.src}
+                    alt={p.notice.image.alt}
+                    width={p.notice.image.width}
+                    height={p.notice.image.height}
+                    loading="lazy"
+                  />
                 </div>
               )}
             </div>

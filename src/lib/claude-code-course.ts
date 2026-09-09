@@ -74,6 +74,14 @@ export const OG_IMAGE = {
   height: 1536,
 } as const;
 
+/** 준비물 섹션 보조 이미지 — 책상 위 노트북 */
+export const PREPARE_IMAGE = {
+  src: `${CDN}/hf_20260909_063859_d0589e5a-e275-40bf-b5a8-e1f05589a040.png`,
+  alt: "짙은 회색 책상 위에 펼쳐진 노트북과 노트, 펜, 작은 화분을 위에서 내려다본 모습",
+  width: 2400,
+  height: 1792,
+} as const;
+
 /** 신청 전 반드시 확인해야 하는 조건. 신청 안내 영역 상단에 표시됩니다. */
 export const NOTICE = {
   title: "Claude Pro 플랜($22/월) 이상 유료 구독이 필요합니다",
